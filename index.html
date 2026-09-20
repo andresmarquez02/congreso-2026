@@ -33,6 +33,52 @@
   @keyframes lbxSpin { to { transform: rotate(360deg); } }
   .g-photo { transition: transform .5s cubic-bezier(.4,0,.2,1), filter .5s cubic-bezier(.4,0,.2,1); }
   .g-photo:hover { transform: scale(1.04); filter: none !important; }
+
+  /* --- Móvil: hasta 759px -------------------------------------------- */
+  @media (max-width: 759px) {
+    /* Tira de fotos: en vez de comprimir 5 imágenes en 390px (quedaban en
+       astillas de ~70px), se convierte en un carrusel que se desliza con el
+       dedo y muestra dos y media. Los !important pisan los estilos inline. */
+    [data-strip] {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 10px !important;
+      padding: 0 18px 10px !important;
+    }
+    [data-strip]::-webkit-scrollbar { display: none; }
+    [data-strip] img {
+      flex: 0 0 46vw !important;
+      scroll-snap-align: center;
+      height: 190px !important;
+    }
+    [data-strip] img:nth-child(2),
+    [data-strip] img:nth-child(4) { height: 225px !important; }
+    [data-strip] img:nth-child(3) { height: 265px !important; }
+
+    /* Manchas de color: en escritorio se reparten por el ancho, pero en
+       móvil caían las tres en los primeros 200px — detrás del header y
+       superpuestas, así que el amarillo, el azul y el rojo se mezclaban en
+       un tono sucio. Aquí se separan en triángulo por el alto del hero y
+       se suben de intensidad, porque al ser más pequeñas el desenfoque
+       las apaga más. */
+    [data-blob]:nth-child(1) {
+      top: 194px !important; left: -20% !important;
+      width: 70vw !important; height: 70vw !important;
+      background: radial-gradient(circle, rgba(247,190,45,.42), rgba(247,190,45,0) 62%) !important;
+    }
+    [data-blob]:nth-child(2) {
+      top: 298px !important; left: 20% !important;
+      width: 78vw !important; height: 78vw !important;
+      background: radial-gradient(circle, rgba(38,96,214,.46), rgba(38,96,214,0) 64%) !important;
+    }
+    [data-blob]:nth-child(3) {
+      top: 188px !important; left: auto !important; right: -19% !important;
+      width: 68vw !important; height: 68vw !important;
+      background: radial-gradient(circle, rgba(197,34,42,.34), rgba(197,34,42,0) 62%) !important;
+    }
+  }
 </style>
 </helmet>
 

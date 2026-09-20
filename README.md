@@ -10,7 +10,7 @@ de una aplicación web de Google Apps Script.
 
 | Ruta | Qué es |
 |---|---|
-| `Congreso Jovenes 2026.dc.html` | La página completa: maquetado, estilos y lógica del componente |
+| `index.html` | La página completa: maquetado, estilos y lógica del componente |
 | `google-apps-script.gs` | Backend que recibe el formulario y escribe en el Sheet |
 | `support.js` | Runtime del componente (`<x-dc>`, `<sc-if>`, `{{ }}`) |
 | `_ds/` | Design system: tokens de color, tipografía y espaciado |
@@ -29,7 +29,7 @@ archivo con doble clic** (`file://`). Hace falta un servidor:
 python -m http.server 8777
 ```
 
-Luego abre <http://localhost:8777/Congreso%20Jovenes%202026.dc.html>.
+Luego abre <http://localhost:8777/>.
 
 ## Conectar el formulario al Sheet
 
@@ -44,7 +44,7 @@ hoja mediante `SpreadsheetApp.openById`.
 4. **Implementar → Nueva implementación → Aplicación web**, con:
    - **Ejecutar como:** Yo
    - **Quién tiene acceso:** Cualquier usuario
-5. Copia la URL `/exec` y ponla en `REGISTRO_ENDPOINT`, dentro del `.dc.html`.
+5. Copia la URL `/exec` y ponla en `REGISTRO_ENDPOINT`, dentro de `index.html`.
 
 > Los dos ajustes del paso 4 están acoplados: mientras «Ejecutar como» sea
 > *Usuario que accede a la aplicación web*, Google no acepta «Cualquier
@@ -100,6 +100,26 @@ dejaría pasar duplicados cuando dos personas envían a la vez.
 Hay además un campo señuelo (`website`) oculto fuera de pantalla. Si llega
 relleno, la petición se descarta en silencio: los bots completan todos los
 campos, las personas no.
+
+## Comportamiento en móvil
+
+Hay un bloque `@media (max-width: 759px)` al final de los estilos con dos
+ajustes que no se pueden resolver con los mismos valores que en escritorio:
+
+- **La tira de fotos del hero** pasa a ser un carrusel horizontal con
+  *scroll-snap*. Repartir cinco imágenes con `flex:1` en 390px las dejaba en
+  astillas de unos 70px de ancho.
+- **Las manchas de color** (amarillo, azul y rojo) se reposicionan en
+  triángulo y suben de intensidad. Con los valores de escritorio caían las
+  tres en los primeros 200px de la pantalla, detrás del header y
+  solapadas entre sí, de modo que los tres colores se mezclaban en un tono
+  sucio en vez de leerse por separado.
+
+Ambos bloques usan `!important` porque los estilos del maquetado son inline y
+de otro modo ganarían ellos.
+
+El resto del diseño responsive se resuelve en `applyMedia()`, dentro de la
+lógica del componente, que ajusta columnas de rejilla según `window.innerWidth`.
 
 ## Archivos no versionados
 
