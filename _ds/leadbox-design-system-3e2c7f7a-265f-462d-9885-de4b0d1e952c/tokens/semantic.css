@@ -1,0 +1,63 @@
+/* Semantic theme tokens — the ONLY color roles new Leadbox UI should use for
+   neutral surfaces, text and hairlines. Light values on :root, dark values
+   under .dark (the theme store toggles `.dark` on <html>).
+     surface    cards, panels, dropdowns, modals
+     page       app/page background
+     subtle     table headers, wells, hover rows, input fills
+     soft/-2/-3 chips, kbd, pills, skeletons
+     ink/-2/-3/-4 text strong -> dim
+     ink-brand  navy body text (data tables)
+     line/-soft/-strong hairlines */
+:root {
+  --color-surface: #ffffff;
+  --color-page: #f3f4f6;
+  --color-subtle: #f9fafb;
+  --color-soft: #f3f4f6;
+  --color-soft-2: #e5e7eb;
+  --color-soft-3: #d1d5dc;
+  --color-ink: #121827;
+  --color-ink-2: #364153;
+  --color-ink-3: #4a5565;
+  --color-ink-4: #6a7282;
+  --color-ink-brand: #090f4b;
+  --color-line: #e5e7eb;
+  --color-line-soft: #f3f4f6;
+  --color-line-strong: #d1d5dc;
+
+  /* Role aliases used across app UI */
+  --text-body: var(--color-ink-brand);
+  --text-heading: var(--color-ink);
+  --text-muted: var(--color-ink-4);
+  --text-link: var(--color-primary);
+  --surface-card: var(--color-surface);
+  --surface-app: var(--color-page);
+  --surface-nav: var(--color-dark);
+  --border-card: var(--color-stroke);
+}
+
+.dark {
+  color-scheme: dark;
+  --color-surface: #1f2a37;
+  --color-page: #111827;
+  --color-subtle: #111827;
+  --color-soft: #16202e;
+  --color-soft-2: #374151;
+  --color-soft-3: #4b5563;
+  --color-ink: #f3f4f6;
+  --color-ink-2: #d1d5db;
+  --color-ink-3: #9ca3af;
+  --color-ink-4: #9ca3af;
+  --color-ink-brand: #d6dbf5;
+  --color-line: #374151;
+  --color-line-soft: #374151;
+  --color-line-strong: #4b5563;
+
+  /* single-role legacy vars flipped for dark */
+  --color-stroke: #374151;
+  --color-primarytext: #f3f4f6;
+  --color-secondarytext: #9ca3af;
+
+  /* contextual: brand blue reads too dark on dark surfaces */
+  --color-primary-on-dark: #66a3e8;
+  --color-border-primary-on-dark: #4d7cc7;
+}

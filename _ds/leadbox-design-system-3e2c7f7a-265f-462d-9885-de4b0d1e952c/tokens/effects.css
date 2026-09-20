@@ -1,0 +1,38 @@
+/* Radii, shadows, focus rings and motion — all lifted from the shipped UI. */
+:root {
+  --radius-sm: 0.125rem;   /* checkbox */
+  --radius-md: 0.375rem;   /* buttons, inputs, badges, selects (6px) */
+  --radius-lg: 0.5rem;     /* cards, panels, stat cards */
+  --radius-full: 9999px;   /* avatars, pills, progress tracks */
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Keyboard focus: 2px solid brand blue, offset 2px (a:focus-visible etc.) */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-primary);
+  /* Form controls use a soft blue outline instead of the brand ring */
+  --focus-outline-input: var(--color-new-outline);
+  --focus-outline-invalid: var(--color-red-light-3);
+
+  /* Motion — everything is a short linear-ish transition; no bounces. */
+  --duration-fast: 100ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+  --duration-slow: 300ms; /* @kind other */
+  --duration-drawer: 700ms; /* @kind other */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1); /* @kind other */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1); /* @kind other */
+
+  /* Overlays */
+  --overlay-dialog: rgb(107 114 128 / 0.75); /* bg-gray-500/75 */
+  --overlay-drawer: rgb(0 0 0 / 0.3);        /* + backdrop-blur-sm */
+  --overlay-sidebar: rgb(18 24 39 / 0.8);    /* bg-dark/80 */
+}
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { color: var(--color-primary-variant); text-decoration: underline; }

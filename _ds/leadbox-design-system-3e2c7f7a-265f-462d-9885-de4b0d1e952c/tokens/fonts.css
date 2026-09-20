@@ -1,0 +1,6 @@
+/* Leadbox OS ships no self-hosted font binaries — both families are loaded
+   from Google Fonts, exactly as resources/css/app.css does for Roboto.
+   Figtree is the Tailwind `font-sans` default; Roboto is `font-primary`
+   (data tables, sidebar nav, pagination). */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");

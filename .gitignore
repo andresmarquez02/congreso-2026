@@ -1,0 +1,21 @@
+# Artefactos del editor de diseño, no forman parte del sitio
+.thumbnail
+check/
+
+# Material subido que la página no referencia (21,7 MB).
+# Siguen en la carpeta local; simplemente no se versionan, porque Git
+# conserva los binarios para siempre y encarecen cada clon.
+uploads/original-538926034db2469f8fd881ceb11bde40.mp4
+uploads/original-9d4440ee7144160b0d20fdd0f095dddc.webp
+uploads/4fe8264e60551d77681614d7d6ce9f18.webp
+uploads/pasted-1789932490117-0.png
+uploads/pasted-1789932966465-0.png
+uploads/pasted-1789933213261-0.png
+uploads/WhatsApp Image 2026-09-19 at 11.39.231 PM.png
+uploads/WhatsApp Image 2026-09-19 at 11.39.28 PM.jpeg
+uploads/WhatsApp Image 2026-09-19 at 11.39.289 PM.jpeg
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store

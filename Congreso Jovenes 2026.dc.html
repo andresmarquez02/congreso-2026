@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.231%20PM.ico" />
+<title>Congreso de Jóvenes 2026 · Unidos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Barlow+Condensed:wght@500;600;700&family=Figtree:wght@400;500;600;700&family=Kaushan+Script&display=swap" />
+<link rel="stylesheet" href="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/tokens/colors.css" />
+<link rel="stylesheet" href="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/tokens/semantic.css" />
+<link rel="stylesheet" href="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/tokens/spacing.css" />
+<link rel="stylesheet" href="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/tokens/effects.css" />
+<link rel="stylesheet" href="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/styles.css" />
+<script src="_ds/leadbox-design-system-3e2c7f7a-265f-462d-9885-de4b0d1e952c/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #080B14; color: #F3EFE6; font-family: Figtree, system-ui, sans-serif; overflow-x: hidden; }
+  a { color: #E8A33D; text-decoration: none; }
+  a:hover { color: #F3EFE6; }
+  input, select, button { font-family: inherit; }
+  ::selection { background: #E8A33D; color: #0B1020; }
+  @keyframes lbxMarquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes lbxSpin { to { transform: rotate(360deg); } }
+  .g-photo { transition: transform .5s cubic-bezier(.4,0,.2,1), filter .5s cubic-bezier(.4,0,.2,1); }
+  .g-photo:hover { transform: scale(1.04); filter: none !important; }
+</style>
+</helmet>
+
+<div id="loader" style="position:fixed; inset:0; z-index:9999; background:#080B14; display:flex; flex-direction:column; justify-content:flex-end; padding:24px; box-sizing:border-box">
+  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(78vw,520px); text-align:center">
+    <img id="loaderMark" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.231%20PM-7e1ebfa6.png" alt="Unidos · Juan 17:22-23" style="width:100%; height:auto; display:block" />
+  </div>
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px">
+    <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#6F7A93; line-height:1.4; max-width:180px">Congreso de<br />Jóvenes 2026</div>
+    <div id="loaderNum" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(64px,22vw,160px); line-height:.8; color:#F3EFE6; letter-spacing:-.04em">0</div>
+  </div>
+  <div style="height:2px; background:rgba(243,239,230,.14); margin-top:20px; overflow:hidden">
+    <div id="loaderBar" style="height:100%; width:0%; background:#E8A33D"></div>
+  </div>
+</div>
+
+<header style="position:fixed; top:0; left:0; right:0; z-index:400; background:rgba(8,11,20,.34); backdrop-filter:blur(14px); border-bottom:1px solid rgba(243,239,230,0); transition:background .25s cubic-bezier(.4,0,.2,1), border-color .25s cubic-bezier(.4,0,.2,1)">
+  <div style="max-width:1200px; margin:0 auto; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:16px">
+    <a href="#top" style="display:flex; align-items:center"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.231%20PM-7e1ebfa6.png" alt="Unidos Juan 17:22-23" style="height:42px; width:auto; display:block" /></a>
+    <nav style="display:none; gap:26px; align-items:center" data-desk-nav>
+      <a href="#congreso" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:14px; color:#F3EFE6">El Congreso</a>
+      <a href="#registro" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:14px; color:#F3EFE6">Registro</a>
+      <a href="#galeria" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:14px; color:#F3EFE6">Galería</a>
+      <a href="#aliados" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:14px; color:#F3EFE6">Aliados</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px">
+      <a href="#registro" style="background:#E8A33D; color:#0B1020; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:14px; padding:10px 18px; border-radius:999px; white-space:nowrap">Inscribirme</a>
+      <button type="button" onClick="{{ toggleMenu }}" aria-label="Menú" data-burger style="background:transparent; border:1px solid rgba(243,239,230,.24); color:#F3EFE6; width:42px; height:42px; border-radius:999px; display:grid; place-items:center; cursor:pointer; font-size:18px; line-height:1">≡</button>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav style="display:grid; gap:2px; padding:8px 18px 22px; background:#0B1020; border-top:1px solid rgba(243,239,230,.08)">
+      <a href="#congreso" onClick="{{ closeMenu }}" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:28px; color:#F3EFE6; padding:6px 0">El Congreso</a>
+      <a href="#registro" onClick="{{ closeMenu }}" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:28px; color:#F3EFE6; padding:6px 0">Registro</a>
+      <a href="#galeria" onClick="{{ closeMenu }}" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:28px; color:#F3EFE6; padding:6px 0">Galería</a>
+      <a href="#aliados" onClick="{{ closeMenu }}" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:28px; color:#F3EFE6; padding:6px 0">Aliados</a>
+    </nav>
+  </sc-if>
+</header>
+
+<main id="top">
+
+  <section style="position:relative; padding:122px 18px 0; overflow:hidden">
+    <div aria-hidden="true" style="position:absolute; inset:-120px 0 auto 0; height:760px; pointer-events:none; overflow:hidden">
+      <div data-blob style="position:absolute; top:40px; left:-6%; width:min(62vw,500px); height:min(62vw,500px); border-radius:999px; background:radial-gradient(circle, rgba(247,190,45,.30), rgba(247,190,45,0) 64%); filter:blur(18px)"></div>
+      <div data-blob style="position:absolute; top:0; left:calc(50% - min(36vw,300px)); width:min(72vw,600px); height:min(66vw,540px); border-radius:999px; background:radial-gradient(circle, rgba(38,96,214,.34), rgba(38,96,214,0) 66%); filter:blur(18px)"></div>
+      <div data-blob style="position:absolute; top:90px; right:-6%; width:min(58vw,470px); height:min(58vw,470px); border-radius:999px; background:radial-gradient(circle, rgba(197,34,42,.22), rgba(197,34,42,0) 64%); filter:blur(18px)"></div>
+    </div>
+    <div style="position:relative; max-width:1200px; margin:0 auto; text-align:center">
+      <div data-anim="up" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(232,163,61,.45); border-radius:999px; padding:7px 16px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#E8A33D">
+        <span style="width:6px; height:6px; border-radius:999px; background:#E8A33D; display:block"></span>15 al 18 de octubre · 2026
+      </div>
+      <h1 data-hero-title style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(44px,13.5vw,132px); line-height:.86; letter-spacing:-.045em; margin:18px 0 0; text-wrap:balance">
+        <span style="display:block"><span data-line style="display:block">Congreso <span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:.82em">de</span></span></span>
+        <span style="display:block"><span data-line style="display:block">Jóvenes <span style="color:#E8A33D">2026</span></span></span>
+      </h1>
+      <p data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:clamp(13px,3.4vw,18px); color:#A7B0C4; margin:18px 0 0">Unidos para marcar la diferencia</p>
+      <div data-anim="up" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:26px">
+        <a href="#registro" style="background:#E8A33D; color:#0B1020; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:16px; padding:15px 30px; border-radius:999px">Inscríbete gratis</a>
+        <a href="#congreso" style="border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:16px; padding:15px 30px; border-radius:999px">Conocer más</a>
+      </div>
+    </div>
+    <div data-strip style="display:flex; gap:clamp(6px,1.4vw,10px); justify-content:center; align-items:flex-end; margin:34px auto 0; max-width:1200px; padding:0 2px">
+      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" alt="Jóvenes adorando" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" alt="Alabanza en el templo" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" alt="Joven en oración" style="flex:1.15 1 0; min-width:0; height:clamp(230px,46vw,380px); object-fit:cover; border-radius:6px; filter:none" class="g-photo" />
+      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" alt="Manos levantadas" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" alt="Equipo de jóvenes" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+    </div>
+  </section>
+
+  <div style="margin-top:28px; background:#E8A33D; color:#0B1020; overflow:hidden; border-top:1px solid #0B1020; border-bottom:1px solid #0B1020">
+    <div style="display:flex; width:max-content; animation:lbxMarquee 26s linear infinite">
+      <div style="display:flex; align-items:center; gap:34px; padding:12px 17px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(16px,4vw,26px); letter-spacing:-.01em; white-space:nowrap">
+        <span>Unidos</span><span>•</span><span>Juan 17:22-23</span><span>•</span><span>Iglesia Sinaí</span><span>•</span><span>#IglesiaUnida</span><span>•</span><span>Altagracia de Orituco</span><span>•</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:34px; padding:12px 17px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(16px,4vw,26px); letter-spacing:-.01em; white-space:nowrap" aria-hidden="true">
+        <span>Unidos</span><span>•</span><span>Juan 17:22-23</span><span>•</span><span>Iglesia Sinaí</span><span>•</span><span>#IglesiaUnida</span><span>•</span><span>Altagracia de Orituco</span><span>•</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="congreso" style="padding:64px 18px; max-width:1200px; margin:0 auto; scroll-margin-top:88px">
+    <div style="display:grid; gap:34px; grid-template-columns:1fr" data-col2>
+      <div>
+        <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#E8A33D; margin-bottom:14px">Acerca del congreso</div>
+        <h2 data-anim="up" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(30px,7.6vw,58px); line-height:.94; letter-spacing:-.035em; margin:0 0 20px">Un cuerpo,<br /><span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:.86em">una</span> generación</h2>
+        <p data-anim="up" style="font-size:16px; line-height:1.65; color:#C7CEDC; margin:0 0 18px; max-width:52ch">Un espacio dedicado a explicar la visión del evento: unificar al cuerpo de Cristo a través del liderazgo y la pasión de las nuevas generaciones.</p>
+        <blockquote data-anim="up" style="margin:0; border-left:2px solid #E8A33D; padding:4px 0 4px 18px; max-width:52ch">
+          <p style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(18px,4.6vw,24px); line-height:1.3; margin:0 0 10px; color:#F3EFE6">“Para que sean uno, así como nosotros somos uno; yo en ellos, y tú en mí, para que sean perfectos en unidad.”</p>
+          <cite style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:13px; color:#E8A33D; font-style:normal">Juan 17:22-23</cite>
+        </blockquote>
+      </div>
+      <div style="display:grid; gap:14px">
+        <div data-anim="up" style="background:#0F1626; border:1px solid rgba(243,239,230,.1); border-radius:14px; padding:22px">
+          <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#8E9AB2; margin-bottom:12px">Fecha del evento</div>
+          <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap">
+            <span style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(40px,11vw,64px); line-height:.9; letter-spacing:-.04em; color:#E8A33D">15—18</span>
+            <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:16px; color:#F3EFE6">Octubre 2026</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:18px">
+            <div style="border:1px solid rgba(243,239,230,.12); border-radius:8px; padding:10px 6px; text-align:center"><div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.14em; color:#8E9AB2; text-transform:uppercase">Jue</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px">15</div></div>
+            <div style="border:1px solid rgba(243,239,230,.12); border-radius:8px; padding:10px 6px; text-align:center"><div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.14em; color:#8E9AB2; text-transform:uppercase">Vie</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px">16</div></div>
+            <div style="border:1px solid rgba(243,239,230,.12); border-radius:8px; padding:10px 6px; text-align:center"><div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.14em; color:#8E9AB2; text-transform:uppercase">Sáb</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px">17</div></div>
+            <div style="border:1px solid rgba(232,163,61,.5); background:rgba(232,163,61,.12); border-radius:8px; padding:10px 6px; text-align:center"><div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:.14em; color:#E8A33D; text-transform:uppercase">Dom</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px; color:#E8A33D">18</div></div>
+          </div>
+        </div>
+        <div data-anim="up" style="background:#0F1626; border:1px solid rgba(243,239,230,.1); border-radius:14px; padding:22px">
+          <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#8E9AB2; margin-bottom:10px">Ubicación</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:20px; line-height:1.25; margin-bottom:6px">Salón principal · Iglesia Sinaí</div>
+          <p style="margin:0 0 16px; color:#C7CEDC; font-size:15px; line-height:1.55">Paural 2, Transversal 2, calle 2. Altagracia de Orituco, Estado Guárico, Venezuela.</p>
+          <div style="border-radius:10px; overflow:hidden; border:1px solid rgba(243,239,230,.12); background:#0B1020">
+            <iframe title="Mapa de referencia" src="https://www.google.com/maps?q=Iglesia%20Evang%C3%A9lica%20Pentecostal%20Sina%C3%AD%2C%20Altagracia%20de%20Orituco%2C%20Gu%C3%A1rico&amp;output=embed" style="width:100%; height:200px; border:0; display:block; filter:grayscale(.35) invert(.92) hue-rotate(185deg) contrast(.95)" loading="lazy"></iframe>
+          </div>
+          <a href="https://maps.app.goo.gl/hULqUguinJbvrbmE7" target="_blank" rel="noopener" style="display:inline-flex; margin-top:14px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:14px; font-weight:700">Cómo llegar →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:10px 18px 64px; max-width:1200px; margin:0 auto">
+    <div data-anim="up" style="border-top:1px solid rgba(243,239,230,.1); border-bottom:1px solid rgba(243,239,230,.1); padding:28px 0; text-align:center">
+      <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#A7B0C4">Faltan para el congreso</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; max-width:560px; margin:16px auto 0">
+        <div><div id="cdD" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(28px,9vw,54px); line-height:1; letter-spacing:-.04em">—</div><div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:#8E9AB2; margin-top:6px">Días</div></div>
+        <div><div id="cdH" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(28px,9vw,54px); line-height:1; letter-spacing:-.04em">—</div><div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:#8E9AB2; margin-top:6px">Horas</div></div>
+        <div><div id="cdM" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(28px,9vw,54px); line-height:1; letter-spacing:-.04em">—</div><div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:#8E9AB2; margin-top:6px">Min</div></div>
+        <div><div id="cdS" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(28px,9vw,54px); line-height:1; letter-spacing:-.04em; color:#E8A33D">—</div><div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:#8E9AB2; margin-top:6px">Seg</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="registro" style="padding:0 18px 70px; max-width:1200px; margin:0 auto; scroll-margin-top:88px">
+    <div style="display:grid; gap:26px; grid-template-columns:1fr" data-col2>
+      <div>
+        <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#E8A33D; margin-bottom:14px">Registro</div>
+        <h2 data-anim="up" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(30px,7.6vw,58px); line-height:.94; letter-spacing:-.035em; margin:0 0 16px">Aparta <span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:.86em">tu</span><br />lugar</h2>
+        <p data-anim="up" style="font-size:16px; line-height:1.65; color:#C7CEDC; margin:0; max-width:46ch">Completa el formulario y recibe la confirmación de tu cupo. La entrada es libre; el registro nos ayuda a organizar hospedaje, alimentación y materiales.</p>
+        <div data-anim="up" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:22px">
+          <span style="border:1px solid rgba(243,239,230,.16); border-radius:999px; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-size:12px; color:#A7B0C4">4 días</span>
+          <span style="border:1px solid rgba(243,239,230,.16); border-radius:999px; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-size:12px; color:#A7B0C4">Entrada libre</span>
+          <span style="border:1px solid rgba(243,239,230,.16); border-radius:999px; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-size:12px; color:#A7B0C4">Cupos limitados</span>
+        </div>
+      </div>
+      <div data-anim="up" style="position:relative; background:#0F1626; border:1px solid rgba(232,163,61,.45); border-radius:16px; padding:24px 22px; box-shadow:0 24px 60px -30px rgba(232,163,61,.5); overflow:hidden">
+        <div style="position:absolute; top:-90px; right:-70px; width:220px; height:220px; border-radius:999px; background:radial-gradient(circle, rgba(232,163,61,.22), rgba(232,163,61,0) 70%); pointer-events:none"></div>
+        <div style="position:relative; display:flex; align-items:center; gap:8px; margin-bottom:16px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#E8A33D">
+          <span style="width:7px; height:7px; border-radius:999px; background:#E8A33D; box-shadow:0 0 0 4px rgba(232,163,61,.18)"></span>Inscripción abierta
+        </div>
+        <sc-if value="{{ registered }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:26px 6px">
+            <div style="width:56px; height:56px; border-radius:999px; background:rgba(232,163,61,.15); border:1px solid #E8A33D; color:#E8A33D; display:grid; place-items:center; margin:0 auto 16px; font-size:26px">✓</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:26px; letter-spacing:-.02em"><span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:1.05em">Registro</span> recibido</div>
+            <p style="color:#C7CEDC; font-size:15px; line-height:1.6; margin:10px 0 18px">{{ registeredName }}, tu cupo quedó anotado. Te esperamos del 15 al 18 de octubre en el salón principal de la Iglesia Sinaí.</p>
+            <button type="button" onClick="{{ resetForm }}" style="background:transparent; border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; cursor:pointer">Registrar a otra persona</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ duplicado }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:26px 6px">
+            <div style="width:56px; height:56px; border-radius:999px; background:rgba(232,163,61,.15); border:1px solid #E8A33D; color:#E8A33D; display:grid; place-items:center; margin:0 auto 16px; font-size:26px">✓</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:26px; letter-spacing:-.02em">Ya estás <span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:1.05em">inscrito</span></div>
+            <p style="color:#C7CEDC; font-size:15px; line-height:1.6; margin:10px 0 18px">{{ registeredName }}, ya teníamos tu registro. No hace falta que te inscribas de nuevo: tu cupo está apartado y te esperamos del 15 al 18 de octubre.</p>
+            <button type="button" onClick="{{ resetForm }}" style="background:transparent; border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; cursor:pointer">Registrar a otra persona</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notRegistered }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitForm }}" noValidate style="display:grid; gap:14px">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" />
+            <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Nombre</span><input name="nombre" required placeholder="Tu nombre" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Apellido</span><input name="apellido" required placeholder="Tu apellido" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            </div>
+            <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Edad</span><input name="edad" type="number" min="10" max="99" required placeholder="18" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Iglesia de procedencia</span><input name="iglesia" required placeholder="Iglesia Sinaí" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            </div>
+            <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Dirección de tu iglesia</span><input name="direccion_iglesia" required placeholder="Sector, ciudad y estado" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            <button type="submit" style="margin-top:6px; background:#E8A33D; color:#0B1020; border:0; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:17px; padding:16px 22px; border-radius:999px; cursor:pointer; min-height:52px">{{ submitLabel }}</button>
+            <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; padding:11px 14px; border:1px solid rgba(214,84,84,.45); background:rgba(214,84,84,.12); border-radius:8px; font-size:14px; line-height:1.5; color:#F0B4B4" role="alert">{{ errorMsg }}</p>
+            </sc-if>
+            <p style="margin:2px 0 0; font-size:12px; color:#6F7A93; text-align:center">Al inscribirte aceptas recibir información del congreso por parte de la Iglesia Sinaí.</p>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria" style="padding:64px 18px; background:#0B1020; border-top:1px solid rgba(243,239,230,.08); border-bottom:1px solid rgba(243,239,230,.08); scroll-margin-top:88px">
+    <div style="max-width:1200px; margin:0 auto">
+      <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px; margin-bottom:26px">
+        <div>
+          <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#E8A33D; margin-bottom:12px">Actividades relacionadas</div>
+          <h2 data-anim="up" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,7vw,54px); line-height:.94; letter-spacing:-.035em; margin:0">Cruzada Evangelística:<br /><span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:.86em">Impactados</span> por su Gracia</h2>
+        </div>
+        <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:13px; color:#A7B0C4">Agosto 2026 · <span style="color:#E8A33D">#IglesiaUnida</span></div>
+      </div>
+      <div onClick="{{ openLightbox }}" data-gallery style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px">
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" alt="Alabanza en el templo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.30%202PM.jpeg" alt="Congregación reunida" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.252%20PM.jpeg" alt="Oración por los jóvenes" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" alt="Manos levantadas en adoración" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.2523%20PM.jpeg" alt="Servicio en el templo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" alt="Adoración al aire libre" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.26%204PM.jpeg" alt="Ministración en la cruzada" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.27%207PM.jpeg" alt="Equipo de damas" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" alt="Joven de rodillas en oración" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" alt="Equipo ministerial" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.291%20PM.jpeg" alt="Plaza llena durante la cruzada" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.303%20PM.jpeg" alt="Predicación nocturna" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.30%204PM.jpeg" alt="Templo lleno" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.315%20PM.jpeg" alt="Hermanas adorando" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.316%20PM.jpeg" alt="Foto de familia del equipo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
+      </div>
+      <div style="display:flex; justify-content:center; margin-top:22px">
+        <button type="button" onClick="{{ toggleGallery }}" style="background:transparent; border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; cursor:pointer; min-height:48px">{{ galleryLabel }}</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="aliados" style="background:#F3EFE6; color:#0B1020; padding:56px 18px; scroll-margin-top:88px">
+    <div style="max-width:1200px; margin:0 auto; text-align:center">
+      <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#8A6A2F; margin-bottom:12px">Patrocinadores y aliados</div>
+      <h2 data-anim="up" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(26px,6.4vw,44px); line-height:.96; letter-spacing:-.035em; margin:0 0 30px; color:#0B1020"><span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#8A6A2F; letter-spacing:0; font-size:.9em">Organizaciones</span> participantes</h2>
+      <div style="display:grid; grid-template-columns:1fr; gap:14px" data-allies>
+        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
+          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:190px; max-height:90px; width:100%; object-fit:contain" />
+          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Radio Plenitud 102.1 FM</span>
+        </div>
+        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
+          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:150px; max-height:100px; width:100%; object-fit:contain" />
+          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Iglesia Sinaí</span>
+        </div>
+        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
+          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:130px; max-height:100px; width:100%; object-fit:contain" />
+          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Iglesia Unida</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#080B14; padding:48px 18px 34px">
+    <div style="max-width:1200px; margin:0 auto; display:grid; gap:28px; grid-template-columns:1fr" data-footer>
+      <div>
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.231%20PM-7e1ebfa6.png" alt="Unidos Juan 17:22-23" style="height:44px; width:auto; display:block" />
+        <p style="color:#8E9AB2; font-size:14px; line-height:1.6; margin:14px 0 0; max-width:38ch">Congreso de Jóvenes 2026. Unidos para marcar la diferencia. Iglesia Evangélica Pentecostal Sinaí, Altagracia de Orituco.</p>
+      </div>
+      <div style="display:grid; gap:9px; align-content:start">
+        <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#6F7A93; margin-bottom:2px">Secciones</div>
+        <a href="#congreso" style="color:#F3EFE6; font-size:15px">El Congreso</a>
+        <a href="#registro" style="color:#F3EFE6; font-size:15px">Registro</a>
+        <a href="#galeria" style="color:#F3EFE6; font-size:15px">Galería</a>
+        <a href="#aliados" style="color:#F3EFE6; font-size:15px">Aliados</a>
+      </div>
+      <div style="display:grid; gap:9px; align-content:start">
+        <div style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:#6F7A93; margin-bottom:2px">Dónde</div>
+        <span style="color:#C7CEDC; font-size:15px; line-height:1.5">Paural 2, Transversal 2, calle 2<br />Altagracia de Orituco, Guárico</span>
+        <span style="color:#C7CEDC; font-size:15px">15 al 18 de octubre de 2026</span>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:30px auto 0; padding-top:18px; border-top:1px solid rgba(243,239,230,.1); display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#6F7A93">
+      <span>© 2026 <a href="https://andresmarquez.site/" target="_blank" rel="noopener" style="color:#E8A33D">Andres Marquez</a></span><span>#IglesiaUnida</span>
+    </div>
+  </footer>
+</main>
+
+<sc-if value="{{ lightboxSrc }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeLightbox }}" style="position:fixed; inset:0; z-index:900; background:rgba(8,11,20,.94); display:grid; place-items:center; padding:18px; cursor:zoom-out">
+    <img id="lightboxImg" alt="Foto ampliada" style="max-width:100%; max-height:88vh; border-radius:10px; display:block" />
+    <button type="button" onClick="{{ closeLightbox }}" aria-label="Cerrar" style="position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:999px; background:rgba(243,239,230,.1); border:1px solid rgba(243,239,230,.25); color:#F3EFE6; font-size:20px; cursor:pointer">✕</button>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932}}">
+// URL /exec de la aplicación web de Google Apps Script vinculada al Sheet de
+// registros. Ver google-apps-script.gs para el despliegue. Si algún día se
+// mueve el flujo a n8n, basta con cambiar esta URL por la del webhook.
+const REGISTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbx0k2i5uRKg1eYCdXZRC4MZldRRau-Mm3TZ3AsbZJ7vhbMnqTqnLHZlOearVG6WJ12I/exec";
+
+class Component extends DCLogic {
+  state = { menuOpen: false, registered: false, registeredName: "", lightboxSrc: null, galleryOpen: false, sending: false, errorMsg: "", duplicado: false };
+
+  componentDidMount() {
+    this.applyMedia();
+    this._mq = () => this.applyMedia();
+    window.addEventListener("resize", this._mq);
+    this.startCountdown();
+    this._onScroll = () => {
+      const h = (this.el || document).querySelector("header");
+      if (!h) return;
+      const s = (window.scrollY || document.documentElement.scrollTop) > 24;
+      h.style.background = s ? "rgba(8,11,20,.88)" : "rgba(8,11,20,.34)";
+      h.style.borderBottomColor = s ? "rgba(243,239,230,.1)" : "rgba(243,239,230,0)";
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    this._onScroll();
+    this.runLoader();
+    this.initReveal();
+    this.waitGsap();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._mq);
+    window.removeEventListener("scroll", this._onScroll);
+    clearInterval(this._cd);
+  }
+  componentDidUpdate() {
+    this.applyMedia();
+    const img = (this.el || document).querySelector("#lightboxImg");
+    if (img && this.state.lightboxSrc && img.getAttribute("src") !== this.state.lightboxSrc) img.setAttribute("src", this.state.lightboxSrc);
+  }
+
+  applyMedia() {
+    const root = this.el || document;
+    const w = window.innerWidth;
+    const set = (sel, prop, val) => root.querySelectorAll(sel).forEach(n => { n.style[prop] = val; });
+    set("[data-desk-nav]", "display", w >= 900 ? "flex" : "none");
+    root.querySelectorAll("[data-burger]").forEach(n => { n.style.display = w >= 900 ? "none" : "grid"; });
+    set("[data-col2]", "gridTemplateColumns", w >= 900 ? "1.05fr .95fr" : "1fr");
+    set("[data-form2]", "gridTemplateColumns", w >= 560 ? "1fr 1fr" : "1fr");
+    set("[data-allies]", "gridTemplateColumns", w >= 760 ? "repeat(3,1fr)" : "1fr");
+    set("[data-footer]", "gridTemplateColumns", w >= 760 ? "1.4fr .8fr 1fr" : "1fr");
+    set("[data-gallery]", "gridTemplateColumns", "repeat(" + (w >= 1000 ? 4 : w >= 640 ? 3 : 2) + ",1fr)");
+    set("[data-col2]", "alignItems", w >= 900 ? "center" : "stretch");
+    set("[data-strip]", "justifyContent", w >= 760 ? "center" : "flex-start");
+    // Keep the collapsed gallery to complete rows at every breakpoint.
+    const cols = w >= 1000 ? 4 : w >= 640 ? 3 : 2;
+    const visible = cols === 3 ? 6 : 8;
+    root.querySelectorAll("[data-gallery] img").forEach((n, i) => {
+      n.style.display = this.state.galleryOpen || i < visible ? "block" : "none";
+    });
+  }
+
+  startCountdown() {
+    const target = new Date("2026-10-15T09:00:00-04:00").getTime();
+    const pad = n => String(Math.max(0, n)).padStart(2, "0");
+    const tick = () => {
+      const root = this.el || document;
+      const d = Math.max(0, target - Date.now());
+      const set = (id, v) => { const n = root.querySelector("#" + id); if (n) n.textContent = v; };
+      set("cdD", pad(Math.floor(d / 864e5)));
+      set("cdH", pad(Math.floor(d / 36e5) % 24));
+      set("cdM", pad(Math.floor(d / 6e4) % 60));
+      set("cdS", pad(Math.floor(d / 1e3) % 60));
+    };
+    tick();
+    this._cd = setInterval(tick, 1000);
+  }
+
+  waitGsap(tries) {
+    const t = tries || 0;
+    if (window.gsap) return this.initAnim();
+    if (t > 40) return;
+    setTimeout(() => this.waitGsap(t + 1), 100);
+  }
+
+  // Loader runs on plain JS so it never depends on the GSAP CDN.
+  runLoader() {
+    if (this._loaderRan) return;
+    this._loaderRan = true;
+    const root = this.el || document;
+    const l = root.querySelector("#loader");
+    const num = root.querySelector("#loaderNum");
+    const bar = root.querySelector("#loaderBar");
+    if (!l) return;
+    const dur = 2000, t0 = performance.now();
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      if (num) num.textContent = Math.round(e * 100);
+      if (bar) bar.style.width = (e * 100) + "%";
+      if (p < 1) requestAnimationFrame(step); else this.hideLoader();
+    };
+    requestAnimationFrame(step);
+    this._loaderKill = setTimeout(() => this.hideLoader(), 4000);
+  }
+
+  hideLoader() {
+    clearTimeout(this._loaderKill);
+    const root = this.el || document;
+    const l = root.querySelector("#loader");
+    if (!l || l.dataset.done) return;
+    l.dataset.done = "1";
+    l.style.transition = "transform .8s cubic-bezier(.76,0,.24,1)";
+    l.style.transform = "translateY(-100%)";
+    setTimeout(() => { l.style.display = "none"; }, 850);
+    if (window.gsap) {
+      const q = s => Array.from(root.querySelectorAll(s));
+      window.gsap.from(q("[data-line]"), { y: 48, opacity: 0, duration: .9, stagger: .09, ease: "expo.out", delay: .35 });
+      window.gsap.from(q("[data-strip-item]"), { y: 60, opacity: 0, duration: .8, stagger: .07, ease: "power3.out", delay: .5 });
+    }
+  }
+
+  initAnim() {
+    const gsap = window.gsap;
+    if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+    const root = this.el || document;
+    const q = sel => Array.from(root.querySelectorAll(sel));
+    const mark = root.querySelector("#loaderMark");
+    if (mark) gsap.fromTo(mark, { opacity: 0, scale: .94 }, { opacity: 1, scale: 1, duration: .8, ease: "power2.out" });
+
+    // Ambient tricolour drift (amarillo · azul · rojo), kept faint.
+    q("[data-blob]").forEach((el, i) => {
+      gsap.to(el, {
+        xPercent: i === 1 ? 6 : i === 0 ? 10 : -10,
+        yPercent: i === 1 ? -6 : 8,
+        scale: 1.12,
+        duration: 9 + i * 2.5,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: i * .6
+      });
+    });
+
+    this.initReveal();
+  }
+
+  // IntersectionObserver reveals: independent of the scroll container, and
+  // content is always left visible if anything goes wrong.
+  initReveal() {
+    if (this._revealed) return;
+    this._revealed = true;
+    const root = this.el || document;
+    const els = Array.from(root.querySelectorAll("[data-anim='up'], [data-gallery] img"));
+    if (!("IntersectionObserver" in window)) return;
+    els.forEach(el => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(28px)";
+      el.style.transition = "opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1)";
+    });
+    const show = el => { el.style.opacity = "1"; el.style.transform = "none"; };
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach(el => io.observe(el));
+    // Safety net: nothing stays hidden for longer than 4s.
+    setTimeout(() => els.forEach(el => { if (el.style.opacity === "0") show(el); }), 4000);
+  }
+
+  // Reglas de validación del lado del cliente. Devuelve un objeto
+  // { campo: mensaje } vacío cuando todo está correcto. El servidor
+  // repite estas comprobaciones: esto es comodidad, no seguridad.
+  validar(p) {
+    const soloTexto = /^[\p{L}][\p{L}\s'’.\-]*$/u;
+    const err = {};
+    if (p.nombre.length < 2 || !soloTexto.test(p.nombre)) err.nombre = "Escribe tu nombre (mínimo 2 letras, sin números).";
+    if (p.apellido.length < 2 || !soloTexto.test(p.apellido)) err.apellido = "Escribe tu apellido (mínimo 2 letras, sin números).";
+    const edad = Number(p.edad);
+    if (!Number.isInteger(edad) || edad < 10 || edad > 99) err.edad = "La edad debe ser un número entre 10 y 99.";
+    if (p.iglesia.length < 3) err.iglesia = "Indica el nombre de tu iglesia.";
+    if (p.direccion_iglesia.length < 6) err.direccion_iglesia = "Indica al menos sector, ciudad y estado.";
+    return err;
+  }
+
+  // Pinta (o limpia) el mensaje bajo cada campo. Se ejecuta fuera del ciclo
+  // de render del framework, por eso no dispara setState.
+  pintarErrores(form, err) {
+    const CAMPOS = ["nombre", "apellido", "edad", "iglesia", "direccion_iglesia"];
+    CAMPOS.forEach(k => {
+      const input = form.querySelector('[name="' + k + '"]');
+      if (!input) return;
+      const label = input.closest("label");
+      let p = label && label.querySelector("[data-err]");
+      if (err[k]) {
+        input.style.borderColor = "rgba(214,84,84,.75)";
+        input.setAttribute("aria-invalid", "true");
+        if (!p && label) {
+          p = document.createElement("p");
+          p.setAttribute("data-err", "");
+          p.setAttribute("role", "alert");
+          p.style.cssText = "margin:0; font-size:13px; line-height:1.4; color:#F0B4B4";
+          label.appendChild(p);
+        }
+        if (p) p.textContent = err[k];
+      } else {
+        input.style.borderColor = "rgba(243,239,230,.16)";
+        input.removeAttribute("aria-invalid");
+        if (p) p.remove();
+      }
+    });
+    const primero = CAMPOS.filter(k => err[k])[0];
+    if (primero) {
+      const el = form.querySelector('[name="' + primero + '"]');
+      if (el) el.focus();
+    }
+  }
+
+  // Envía el registro al Sheet. El Content-Type text/plain evita el preflight
+  // CORS que Apps Script no responde; el cuerpo sigue siendo JSON.
+  sendRegistro(payload) {
+    if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) {
+      return Promise.reject(new Error("REGISTRO_ENDPOINT sin configurar"));
+    }
+    return fetch(REGISTRO_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.json().catch(() => ({ ok: r.ok })))
+      .then(d => {
+        // Un duplicado no es un fallo: se resuelve en submitForm con su
+        // propia pantalla, no con el mensaje de error rojo.
+        if (!d || (d.ok === false && !d.duplicado)) throw new Error((d && d.error) || "Respuesta inválida");
+        return d;
+      });
+  }
+
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      registered: this.state.registered,
+      notRegistered: !this.state.registered && !this.state.duplicado,
+      duplicado: this.state.duplicado,
+      registeredName: this.state.registeredName,
+      lightboxSrc: this.state.lightboxSrc,
+      galleryLabel: this.state.galleryOpen ? "Ver menos" : "Ver más fotos",
+      submitLabel: this.state.sending ? "Enviando…" : "Inscribirme",
+      hasError: !!this.state.errorMsg,
+      errorMsg: this.state.errorMsg,
+      toggleGallery: () => this.setState(s => ({ galleryOpen: !s.galleryOpen })),
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      submitForm: e => {
+        e.preventDefault();
+        if (this.state.sending) return;
+        const form = e.target;
+        const f = new FormData(form);
+        const val = k => (f.get(k) || "").toString().trim();
+        if (val("website")) return; // honeypot: solo los bots lo llenan
+        const payload = {
+          nombre: val("nombre"),
+          apellido: val("apellido"),
+          edad: val("edad"),
+          iglesia: val("iglesia"),
+          direccion_iglesia: val("direccion_iglesia")
+        };
+
+        // Validar antes de gastar una petición de red.
+        const err = this.validar(payload);
+        if (Object.keys(err).length) {
+          const pintar = () => this.pintarErrores(form, err);
+          if (this.state.errorMsg) this.setState({ errorMsg: "" }, pintar); else pintar();
+          return;
+        }
+        this.pintarErrores(form, {});
+
+        // Bloquea los campos mientras viaja el POST: sin dobles envíos ni
+        // ediciones a medio camino. Al terminar, el formulario se desmonta.
+        const lock = on => form.querySelectorAll("input, select, button").forEach(n => { n.disabled = on; });
+        lock(true);
+        this.setState({ sending: true, errorMsg: "" });
+        this.sendRegistro(payload).then(d => {
+          lock(false);
+          form.reset();
+          if (d && d.duplicado) {
+            this.setState({ sending: false, duplicado: true, registeredName: payload.nombre || "", errorMsg: "" });
+            return;
+          }
+          this.setState({ sending: false, registered: true, registeredName: payload.nombre || "Listo", errorMsg: "" });
+        }).catch(err => {
+          console.error("[registro]", err);
+          lock(false);
+          this.setState({ sending: false, errorMsg: "No pudimos guardar tu registro. Revisa tu conexión e inténtalo de nuevo." });
+        });
+      },
+      resetForm: () => this.setState({ registered: false, duplicado: false, registeredName: "", errorMsg: "" }),
+      openLightbox: e => { if (e.target.tagName === "IMG") this.setState({ lightboxSrc: e.target.getAttribute("src") }); },
+      closeLightbox: () => this.setState({ lightboxSrc: null })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
