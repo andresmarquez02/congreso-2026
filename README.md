@@ -106,9 +106,23 @@ campos, las personas no.
 Hay un bloque `@media (max-width: 759px)` al final de los estilos con dos
 ajustes que no se pueden resolver con los mismos valores que en escritorio:
 
-- **La tira de fotos del hero** pasa a ser un carrusel horizontal con
-  *scroll-snap*. Repartir cinco imágenes con `flex:1` en 390px las dejaba en
-  astillas de unos 70px de ancho.
+- **La tira de fotos del hero** pasa a ser un marquee que avanza solo, igual
+  que la franja naranja de debajo. Repartir cinco imágenes con `flex:1` en
+  390px las dejaba en astillas de unos 70px de ancho; y resolverlo con scroll
+  horizontal se peleaba con el scroll vertical de la página. El marquee no
+  pide ninguna interacción, así que no compite con nada.
+
+  El maquetado va en un raíl con dos pistas idénticas (la segunda con
+  `aria-hidden`), porque `lbxMarquee` desplaza un 50% y necesita que el
+  contenido esté duplicado para que el ciclo no tenga saltos. En escritorio
+  el raíl y la primera pista son `display:contents` — las imágenes vuelven a
+  ser hijas directas del flex, como si no existieran — y la copia se oculta.
+
+- **El titular** sube de cuerpo pasando `2026` a su propia línea. Con el año
+  en la misma línea que «Jóvenes», esa línea medía 333px de los 354
+  disponibles y no había margen para crecer. El tamaño sale de un `calc`
+  sobre el ancho real de la pantalla, no de un `vw` fijo, que se desbordaba
+  en pantallas de 320px.
 - **Las manchas de color** (amarillo, azul y rojo) se reposicionan en
   triángulo y suben de intensidad. Con los valores de escritorio caían las
   tres en los primeros 200px de la pantalla, detrás del header y

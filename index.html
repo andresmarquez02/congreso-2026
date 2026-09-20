@@ -34,28 +34,65 @@
   .g-photo { transition: transform .5s cubic-bezier(.4,0,.2,1), filter .5s cubic-bezier(.4,0,.2,1); }
   .g-photo:hover { transform: scale(1.04); filter: none !important; }
 
+  /* La tira del hero es una fila de 5 fotos en escritorio y un marquee en
+     móvil. Para no duplicar el maquetado, el raíl y la pista son
+     transparentes aquí (display:contents): las imágenes actúan como hijas
+     directas del flex, igual que antes. La copia solo existe en móvil. */
+  [data-strip-rail], [data-strip-track] { display: contents; }
+  [data-strip-copia] { display: none; }
+
   /* --- Móvil: hasta 759px -------------------------------------------- */
   @media (max-width: 759px) {
-    /* Tira de fotos: en vez de comprimir 5 imágenes en 390px (quedaban en
-       astillas de ~70px), se convierte en un carrusel que se desliza con el
-       dedo y muestra dos y media. Los !important pisan los estilos inline. */
+    /* Tira de fotos: el carrusel con scroll horizontal se peleaba con el
+       scroll vertical de la página (al bajar con el dedo se desplazaban las
+       fotos). Ahora avanza sola, como el marquee naranja de más abajo, sin
+       ninguna interacción que competir. */
     [data-strip] {
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      gap: 10px !important;
-      padding: 0 18px 10px !important;
+      display: block !important;
+      overflow: hidden;
+      padding: 0 !important;
     }
-    [data-strip]::-webkit-scrollbar { display: none; }
+    [data-strip-rail] {
+      display: flex;
+      width: max-content;
+      animation: lbxMarquee 34s linear infinite;
+    }
+    [data-strip-track] {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding-right: 10px;
+    }
+    [data-strip-copia] { display: flex; }
     [data-strip] img {
-      flex: 0 0 46vw !important;
-      scroll-snap-align: center;
+      flex: 0 0 auto !important;
+      width: 46vw;
       height: 190px !important;
     }
-    [data-strip] img:nth-child(2),
-    [data-strip] img:nth-child(4) { height: 225px !important; }
-    [data-strip] img:nth-child(3) { height: 265px !important; }
+    [data-strip-track] img:nth-child(2),
+    [data-strip-track] img:nth-child(4) { height: 225px !important; }
+    [data-strip-track] img:nth-child(3) { height: 265px !important; }
+    /* Sin hover en táctil, y el marquee no debe alterarse al tocarlo. */
+    [data-strip] .g-photo:hover { transform: none; }
+
+    /* Titular: a 52px la línea "Jóvenes 2026" medía 333px de los 354
+       disponibles, así que no había margen para crecer. Pasando el año a
+       su propia línea, la línea más larga pasa a ser "Congreso de" y el
+       cuerpo puede subir. El calc reparte el ancho real de la pantalla en
+       vez de fijar un vw, que se desbordaba en pantallas de 320px. */
+    [data-hero-title] {
+      font-size: calc((100vw - 44px) / 5.9) !important;
+      letter-spacing: -.05em !important;
+    }
+    [data-hero-title] [data-year] { display: block; }
+
+    /* Bajada del hero: 13px con .2em de tracking se leía diminuta. */
+    [data-hero-sub] {
+      font-size: 15px !important;
+      letter-spacing: .16em !important;
+      line-height: 1.5;
+      margin-top: 14px !important;
+    }
 
     /* Manchas de color: en escritorio se reparten por el ancho, pero en
        móvil caían las tres en los primeros 200px — detrás del header y
@@ -133,20 +170,31 @@
       </div>
       <h1 data-hero-title style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(44px,13.5vw,132px); line-height:.86; letter-spacing:-.045em; margin:18px 0 0; text-wrap:balance">
         <span style="display:block"><span data-line style="display:block">Congreso <span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:.82em">de</span></span></span>
-        <span style="display:block"><span data-line style="display:block">Jóvenes <span style="color:#E8A33D">2026</span></span></span>
+        <span style="display:block"><span data-line style="display:block">Jóvenes <span data-year style="color:#E8A33D">2026</span></span></span>
       </h1>
-      <p data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:clamp(13px,3.4vw,18px); color:#A7B0C4; margin:18px 0 0">Unidos para marcar la diferencia</p>
+      <p data-anim="up" data-hero-sub style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:clamp(13px,3.4vw,18px); color:#A7B0C4; margin:18px 0 0">Unidos para marcar la diferencia</p>
       <div data-anim="up" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:26px">
         <a href="#registro" style="background:#E8A33D; color:#0B1020; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:16px; padding:15px 30px; border-radius:999px">Inscríbete gratis</a>
         <a href="#congreso" style="border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:16px; padding:15px 30px; border-radius:999px">Conocer más</a>
       </div>
     </div>
     <div data-strip style="display:flex; gap:clamp(6px,1.4vw,10px); justify-content:center; align-items:flex-end; margin:34px auto 0; max-width:1200px; padding:0 2px">
-      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" alt="Jóvenes adorando" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
-      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" alt="Alabanza en el templo" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
-      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" alt="Joven en oración" style="flex:1.15 1 0; min-width:0; height:clamp(230px,46vw,380px); object-fit:cover; border-radius:6px; filter:none" class="g-photo" />
-      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" alt="Manos levantadas" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
-      <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" alt="Equipo de jóvenes" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+      <div data-strip-rail>
+        <div data-strip-track>
+        <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" alt="Jóvenes adorando" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" alt="Alabanza en el templo" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" alt="Joven en oración" style="flex:1.15 1 0; min-width:0; height:clamp(230px,46vw,380px); object-fit:cover; border-radius:6px; filter:none" class="g-photo" />
+        <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" alt="Manos levantadas" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img data-strip-item src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" alt="Equipo de jóvenes" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        </div>
+        <div data-strip-track data-strip-copia aria-hidden="true">
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" aria-hidden="true" alt="Jóvenes adorando" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" aria-hidden="true" alt="Alabanza en el templo" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" aria-hidden="true" alt="Joven en oración" style="flex:1.15 1 0; min-width:0; height:clamp(230px,46vw,380px); object-fit:cover; border-radius:6px; filter:none" class="g-photo" />
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" aria-hidden="true" alt="Manos levantadas" style="flex:1 1 0; min-width:0; height:clamp(190px,38vw,320px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" aria-hidden="true" alt="Equipo de jóvenes" style="flex:1 1 0; min-width:0; height:clamp(150px,30vw,250px); object-fit:cover; border-radius:6px; filter:grayscale(1) contrast(1.1)" class="g-photo" />
+        </div>
+      </div>
     </div>
   </section>
 
