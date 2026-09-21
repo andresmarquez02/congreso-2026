@@ -29,7 +29,7 @@ archivo con doble clic** (`file://`). Hace falta un servidor:
 python -m http.server 8777
 ```
 
-Luego abre <http://localhost:8777/>.
+Luego abre <https://jovenes-unidos-congreso-2026.vercel.app/>.
 
 ## Conectar el formulario al Sheet
 
@@ -67,10 +67,33 @@ trata como petición simple y no dispara el *preflight* de CORS, que Apps Script
 no sabe responder. La respuesta se sirve desde `script.googleusercontent.com`
 con `Access-Control-Allow-Origin: *`.
 
-Campos enviados: `nombre`, `apellido`, `edad`, `iglesia`, `direccion_iglesia`.
+Campos enviados: `nombre`, `apellido`, `cedula`, `edad`, `telefono_codigo`,
+`telefono_numero`, `estado`, `ciudad`, `direccion_casa`, `iglesia`,
+`direccion_iglesia`.
 
-Columnas de la hoja: `Fecha · Nombre · Apellido · Edad · Iglesia ·
+Columnas de la hoja: `Fecha · Cédula · Nombre · Apellido · Nombre completo ·
+Edad · Teléfono · Estado · Ciudad · Dirección de casa · Iglesia ·
 Dirección de la iglesia`. Si cambian, el script rehace la fila de cabeceras.
+
+Ese orden es el **formato único** del que salen los certificados y la agenda de
+contactos, así que nada se escribe tal cual llega:
+
+| Dato | Entra | Se guarda |
+|---|---|---|
+| Cédula | `V-12.345.678` | `12345678` (solo dígitos) |
+| Teléfono | `0412` + `123 45 67` | `0412-1234567` |
+| Nombre completo | `josé` + `PÉREZ` | `José Pérez` |
+| Ciudad / direcciones | `calle 5,SECTOR el rosario` | `Calle 5, Sector El Rosario` |
+| Estado | (lista cerrada) | `Guárico` |
+
+`titulo_()` deja en minúscula las partículas de enlace (`de`, `del`, `la`, `y`,
+`en`…) para que un certificado no salga con «Altagracia De Orituco». Las
+columnas de cédula y teléfono llevan formato de texto: si no, Sheets se come el
+cero inicial de `0412…`.
+
+> Al estrenar esta estructura sobre la hoja vieja, **vacía la pestaña primero**.
+> El script rehace la cabecera, pero las filas anteriores se quedan en sus
+> columnas de origen y quedarían corridas bajo los títulos nuevos.
 
 ## Validación y duplicados
 
@@ -81,18 +104,53 @@ inmediatos en español bajo cada campo; el servidor las repite porque la URL
 | Campo | Regla |
 |---|---|
 | Nombre / Apellido | ≥ 2 letras, sin números; admite acentos, ñ, apóstrofes y guiones |
+| Cédula | Obligatorio · de 6 a 9 dígitos una vez quitados puntos, guiones y la letra · no puede estar ya en la hoja |
 | Edad | Entero entre 10 y 99 |
-| Iglesia | ≥ 3 caracteres |
-| Dirección | ≥ 6 caracteres |
+| Teléfono | Obligatorio · código de la lista de operadoras + 7 dígitos |
+| Estado | Obligatorio · uno de los 24 de la lista cerrada |
+| Ciudad o municipio | Obligatorio · ≥ 3 caracteres |
+| Dirección de casa | Obligatorio · ≥ 6 caracteres |
+| Iglesia | **Opcional** · si se escribe, ≥ 3 caracteres |
+| Dirección de la iglesia | **Opcional** · si se escribe, ≥ 6 caracteres |
+
+Los dos campos de iglesia son opcionales a propósito: quien todavía no se
+congrega también tiene que poder inscribirse. La dirección que sí hace falta
+es la de la casa.
+
+El teléfono son dos controles (`telefono_codigo` y `telefono_numero`) que
+cuentan como un solo campo de cara al error. Los códigos válidos son los de las
+tres operadoras móviles —Digitel `0412` `0422`, Movistar `0414` `0424`,
+Movilnet `0416` `0426`— y viven en la constante `OPERADORAS` de `index.html` y
+en `CODIGOS_TEL` de `google-apps-script.gs`. La lista de estados está igual de
+duplicada (`ESTADOS` en ambos): **si se toca una, hay que tocar la otra**. Los
+`<select>` del formulario se rellenan desde esas constantes con
+`poblarListas()`, así que el marcado no repite ningún valor.
 
 El formulario lleva `noValidate` para que no salten los globos del navegador
 —en el idioma del sistema y con su propio estilo— antes de los mensajes
 propios.
 
-Un registro se considera **duplicado** cuando coinciden **nombre + apellido +
-edad** una vez normalizados (sin acentos, sin mayúsculas, sin espacios
-sobrantes). En ese caso no se escribe nada y la persona ve una pantalla de
-«Ya estás inscrito» en lugar de un error.
+Un registro se considera **duplicado** cuando la **cédula** ya está en la hoja,
+comparando solo los dígitos: `V-12.345.678` y `12345678` son la misma persona.
+En ese caso no se escribe nada y quien envía ve una pantalla de «Ya estás
+inscrito» en lugar de un error. Una cédula, una fila: es lo que garantiza que
+el listado de certificados no lleve a nadie repetido.
+
+El aviso llega antes del envío. Al salir del campo de la cédula, la página
+consulta `GET /exec?cedula=12345678`, que responde `{ ok: true, existe: … }`, y
+pinta el error bajo el campo; a partir de ahí el formulario no deja enviar con
+esa cédula aunque se rellene todo lo demás. Las cédulas ya vistas se recuerdan
+en `_cedulasTomadas` mientras la pestaña siga abierta, de modo que «Registrar a
+otra persona» tampoco las vuelve a aceptar.
+
+> Esa consulta es pública, como el resto de la URL `/exec`. Solo devuelve un
+> sí/no —ningún nombre ni dato sale de la hoja—, pero significa que cualquiera
+> que pruebe una cédula puede saber si esa persona está inscrita. Si eso
+> molesta, se quita el bloque de `doGet` que mira `e.parameter.cedula`: el
+> formulario sigue rechazando el duplicado, solo que al enviar en vez de antes.
+
+La comprobación del cliente es una cortesía; la que manda es la del servidor,
+dentro del `LockService`, porque la URL `/exec` es pública.
 
 La búsqueda y la escritura ocurren dentro del mismo `LockService`: separarlas
 dejaría pasar duplicados cuando dos personas envían a la vez.

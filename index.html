@@ -288,7 +288,7 @@
           <div style="text-align:center; padding:26px 6px">
             <div style="width:56px; height:56px; border-radius:999px; background:rgba(232,163,61,.15); border:1px solid #E8A33D; color:#E8A33D; display:grid; place-items:center; margin:0 auto 16px; font-size:26px">✓</div>
             <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:26px; letter-spacing:-.02em">Ya estás <span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#E8A33D; letter-spacing:0; font-size:1.05em">inscrito</span></div>
-            <p style="color:#C7CEDC; font-size:15px; line-height:1.6; margin:10px 0 18px">{{ registeredName }}, ya teníamos tu registro. No hace falta que te inscribas de nuevo: tu cupo está apartado y te esperamos del 15 al 18 de octubre.</p>
+            <p style="color:#C7CEDC; font-size:15px; line-height:1.6; margin:10px 0 18px">{{ registeredName }}, esa cédula ya está registrada. No hace falta que te inscribas de nuevo: tu cupo está apartado y te esperamos del 15 al 18 de octubre.</p>
             <button type="button" onClick="{{ resetForm }}" style="background:transparent; border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; cursor:pointer">Registrar a otra persona</button>
           </div>
         </sc-if>
@@ -296,19 +296,28 @@
           <form onSubmit="{{ submitForm }}" noValidate style="display:grid; gap:14px">
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" />
             <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
-              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Nombre</span><input name="nombre" required placeholder="Tu nombre" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
-              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Apellido</span><input name="apellido" required placeholder="Tu apellido" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Nombre</span><input name="nombre" required autocomplete="given-name" placeholder="Tu nombre" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Apellido</span><input name="apellido" required autocomplete="family-name" placeholder="Tu apellido" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            </div>
+            <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Cédula</span><input name="cedula" required inputmode="numeric" autocomplete="off" maxlength="12" placeholder="12345678" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Teléfono</span><div style="display:grid; grid-template-columns:104px 1fr; gap:8px; min-width:0"><select name="telefono_codigo" required style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0; cursor:pointer"><option value="">Cód.</option></select><input name="telefono_numero" type="tel" required inputmode="numeric" autocomplete="tel-national" maxlength="9" placeholder="1234567" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></div></label>
             </div>
             <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
               <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Edad</span><input name="edad" type="number" min="10" max="99" required placeholder="18" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
-              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Iglesia de procedencia</span><input name="iglesia" required placeholder="Iglesia Sinaí" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Iglesia de procedencia<span style="text-transform:none; letter-spacing:.02em; color:#6F7A93"> (opcional)</span></span><input name="iglesia" placeholder="Iglesia Sinaí" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
             </div>
-            <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Dirección de tu iglesia</span><input name="direccion_iglesia" required placeholder="Sector, ciudad y estado" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            <div style="display:grid; gap:14px; grid-template-columns:1fr" data-form2>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Estado</span><select name="estado" required style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0; cursor:pointer"><option value="">Selecciona tu estado</option></select></label>
+              <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Ciudad o municipio</span><input name="ciudad" required autocomplete="address-level2" placeholder="Altagracia de Orituco" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            </div>
+            <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Dirección exacta de tu casa</span><input name="direccion_casa" required autocomplete="street-address" placeholder="Calle 5, sector El Rosario, casa 12" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
+            <label style="display:grid; gap:7px; min-width:0"><span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:#8E9AB2">Dirección de tu iglesia<span style="text-transform:none; letter-spacing:.02em; color:#6F7A93"> (opcional)</span></span><input name="direccion_iglesia" placeholder="Sector y calle" style="background:#080B14; border:1px solid rgba(243,239,230,.16); border-radius:8px; padding:13px 14px; color:#F3EFE6; font-size:16px; min-height:48px; box-sizing:border-box; width:100%; min-width:0" /></label>
             <button type="submit" style="margin-top:6px; background:#E8A33D; color:#0B1020; border:0; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:17px; padding:16px 22px; border-radius:999px; cursor:pointer; min-height:52px">{{ submitLabel }}</button>
             <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
               <p style="margin:0; padding:11px 14px; border:1px solid rgba(214,84,84,.45); background:rgba(214,84,84,.12); border-radius:8px; font-size:14px; line-height:1.5; color:#F0B4B4" role="alert">{{ errorMsg }}</p>
             </sc-if>
-            <p style="margin:2px 0 0; font-size:12px; color:#6F7A93; text-align:center">Al inscribirte aceptas recibir información del congreso por parte de la Iglesia Sinaí.</p>
+            <p style="margin:2px 0 0; font-size:12px; color:#6F7A93; text-align:center">Un solo registro por cédula. La usamos para emitir tu certificado y para avisarte del congreso.</p>
           </form>
         </sc-if>
       </div>
@@ -405,13 +414,46 @@
 // URL /exec de la aplicación web de Google Apps Script vinculada al Sheet de
 // registros. Ver google-apps-script.gs para el despliegue. Si algún día se
 // mueve el flujo a n8n, basta con cambiar esta URL por la del webhook.
+// La cédula viaja como la escriba la persona, pero se compara y se guarda en
+// dígitos: así "V-12.345.678", "12.345.678" y "12345678" son el mismo
+// registro, y el Excel de certificados queda con un solo formato.
+const soloDigitos = v => String(v == null ? "" : v).replace(/\D+/g, "");
+
+// Códigos de las operadoras móviles de Venezuela. El teléfono se guarda
+// siempre como "0412-1234567", listo para importar la agenda de contactos.
+const OPERADORAS = [
+  ["Digitel", ["0412", "0422"]],
+  ["Movistar", ["0414", "0424"]],
+  ["Movilnet", ["0416", "0426"]]
+];
+const CODIGOS_TEL = OPERADORAS.reduce((todos, o) => todos.concat(o[1]), []);
+
+// El estado sale de una lista cerrada para que en la hoja se pueda filtrar y
+// contar por estado sin pelear con "Guarico", "guárico" y "Edo. Guárico".
+const ESTADOS = [
+  "Amazonas", "Anzoátegui", "Apure", "Aragua", "Barinas", "Bolívar", "Carabobo",
+  "Cojedes", "Delta Amacuro", "Distrito Capital", "Falcón", "Guárico",
+  "La Guaira", "Lara", "Mérida", "Miranda", "Monagas", "Nueva Esparta",
+  "Portuguesa", "Sucre", "Táchira", "Trujillo", "Yaracuy", "Zulia"
+];
+
 const REGISTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbx0k2i5uRKg1eYCdXZRC4MZldRRau-Mm3TZ3AsbZJ7vhbMnqTqnLHZlOearVG6WJ12I/exec";
 
 class Component extends DCLogic {
   state = { menuOpen: false, registered: false, registeredName: "", lightboxSrc: null, galleryOpen: false, sending: false, errorMsg: "", duplicado: false };
 
+  // Cédulas que ya están en la hoja. Se llena con la consulta al salir del
+  // campo y con la respuesta del POST: una vez sabido que está tomada, el
+  // formulario deja de dejar pasar a nadie más con ella.
+  _cedulasTomadas = new Set();
+
   componentDidMount() {
     this.applyMedia();
+    this.poblarListas();
+    // 'focusout' sí burbujea (a diferencia de 'blur'), así que un solo oyente
+    // en la raíz sobrevive a los re-render del formulario.
+    this._onFocusOut = e => { if (e.target && e.target.name === "cedula") this.revisarCedula(e.target); };
+    (this.el || document).addEventListener("focusout", this._onFocusOut);
     this._mq = () => this.applyMedia();
     window.addEventListener("resize", this._mq);
     this.startCountdown();
@@ -429,12 +471,14 @@ class Component extends DCLogic {
     this.waitGsap();
   }
   componentWillUnmount() {
+    (this.el || document).removeEventListener("focusout", this._onFocusOut);
     window.removeEventListener("resize", this._mq);
     window.removeEventListener("scroll", this._onScroll);
     clearInterval(this._cd);
   }
   componentDidUpdate() {
     this.applyMedia();
+    this.poblarListas();
     const img = (this.el || document).querySelector("#lightboxImg");
     if (img && this.state.lightboxSrc && img.getAttribute("src") !== this.state.lightboxSrc) img.setAttribute("src", this.state.lightboxSrc);
   }
@@ -567,6 +611,68 @@ class Component extends DCLogic {
     setTimeout(() => els.forEach(el => { if (el.style.opacity === "0") show(el); }), 4000);
   }
 
+  // Los <select> se llenan desde las constantes de arriba para no repetir las
+  // listas en el marcado. Se vuelve a llamar tras cada render: si se pulsa
+  // "Registrar a otra persona", el formulario es uno nuevo y vacío.
+  poblarListas() {
+    const root = this.el || document;
+    const opcion = (valor, texto) => {
+      const o = document.createElement("option");
+      o.value = valor;
+      o.textContent = texto;
+      o.style.background = "#080B14";
+      return o;
+    };
+    const tel = root.querySelector('[name="telefono_codigo"]');
+    if (tel && tel.options.length <= 1) {
+      OPERADORAS.forEach(([marca, codigos]) => {
+        const g = document.createElement("optgroup");
+        g.label = marca;
+        codigos.forEach(c => g.appendChild(opcion(c, c)));
+        tel.appendChild(g);
+      });
+    }
+    const est = root.querySelector('[name="estado"]');
+    if (est && est.options.length <= 1) ESTADOS.forEach(n => est.appendChild(opcion(n, n)));
+  }
+
+  // Pregunta al Sheet si la cédula ya está inscrita al salir del campo, para
+  // avisar antes de que la persona llene todo lo demás. Es una cortesía:
+  // quien se la salte se topa igual con el rechazo del servidor.
+  revisarCedula(input) {
+    const cedula = soloDigitos(input.value);
+    const form = input.closest("form");
+    if (!form || cedula.length < 6 || cedula.length > 9) return;
+    const avisar = () => this.pintarErrores(form, this.validar(this.leerForm(form)), ["cedula"]);
+    if (this._cedulasTomadas.has(cedula)) return avisar();
+    if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) return;
+    fetch(REGISTRO_ENDPOINT + "?cedula=" + encodeURIComponent(cedula))
+      .then(r => r.json())
+      .then(d => { if (d && d.existe) { this._cedulasTomadas.add(cedula); avisar(); } })
+      .catch(() => {}); // Sin red no se avisa aquí; el POST lo resolverá.
+  }
+
+  // Lee el formulario a un objeto plano. Lo usan el envío y la consulta de
+  // cédula, así que vive en un solo sitio.
+  leerForm(form) {
+    const f = new FormData(form);
+    const val = k => (f.get(k) || "").toString().trim();
+    return {
+      nombre: val("nombre"),
+      apellido: val("apellido"),
+      cedula: val("cedula"),
+      edad: val("edad"),
+      telefono_codigo: val("telefono_codigo"),
+      telefono_numero: val("telefono_numero"),
+      estado: val("estado"),
+      ciudad: val("ciudad"),
+      direccion_casa: val("direccion_casa"),
+      iglesia: val("iglesia"),
+      direccion_iglesia: val("direccion_iglesia"),
+      website: val("website")
+    };
+  }
+
   // Reglas de validación del lado del cliente. Devuelve un objeto
   // { campo: mensaje } vacío cuando todo está correcto. El servidor
   // repite estas comprobaciones: esto es comodidad, no seguridad.
@@ -577,23 +683,47 @@ class Component extends DCLogic {
     if (p.apellido.length < 2 || !soloTexto.test(p.apellido)) err.apellido = "Escribe tu apellido (mínimo 2 letras, sin números).";
     const edad = Number(p.edad);
     if (!Number.isInteger(edad) || edad < 10 || edad > 99) err.edad = "La edad debe ser un número entre 10 y 99.";
-    if (p.iglesia.length < 3) err.iglesia = "Indica el nombre de tu iglesia.";
-    if (p.direccion_iglesia.length < 6) err.direccion_iglesia = "Indica al menos sector, ciudad y estado.";
+    const cedula = soloDigitos(p.cedula);
+    if (cedula.length < 6 || cedula.length > 9) err.cedula = "Escribe tu cédula: entre 6 y 9 números, sin puntos ni letras.";
+    else if (this._cedulasTomadas.has(cedula)) err.cedula = "Esa cédula ya está registrada. Solo se admite un cupo por persona.";
+    if (CODIGOS_TEL.indexOf(p.telefono_codigo) < 0) err.telefono = "Elige el código de tu operadora.";
+    else if (soloDigitos(p.telefono_numero).length !== 7) err.telefono = "Después del código van 7 dígitos, ej. 1234567.";
+    if (ESTADOS.indexOf(p.estado) < 0) err.estado = "Elige tu estado en la lista.";
+    if (p.ciudad.length < 3) err.ciudad = "Escribe tu ciudad o municipio.";
+    if (p.direccion_casa.length < 6) err.direccion_casa = "Indica calle o sector y el número de tu casa.";
+    // La iglesia y su dirección son opcionales a propósito: quien todavía no se
+    // congrega también tiene que poder inscribirse. Solo se revisan si hay algo.
+    if (p.iglesia && p.iglesia.length < 3) err.iglesia = "Escribe el nombre de tu iglesia o deja el campo vacío.";
+    if (p.direccion_iglesia && p.direccion_iglesia.length < 6) err.direccion_iglesia = "Indica al menos sector, ciudad y estado, o deja el campo vacío.";
     return err;
   }
 
   // Pinta (o limpia) el mensaje bajo cada campo. Se ejecuta fuera del ciclo
   // de render del framework, por eso no dispara setState.
-  pintarErrores(form, err) {
-    const CAMPOS = ["nombre", "apellido", "edad", "iglesia", "direccion_iglesia"];
-    CAMPOS.forEach(k => {
-      const input = form.querySelector('[name="' + k + '"]');
+  // 'soloClaves' limita el repintado a esos campos: la consulta de cédula
+  // avisa de la suya sin borrar los errores que aún no se han corregido.
+  pintarErrores(form, err, soloClaves) {
+    const CAMPOS = {
+      nombre: '[name="nombre"]',
+      apellido: '[name="apellido"]',
+      cedula: '[name="cedula"]',
+      telefono: '[name="telefono_codigo"], [name="telefono_numero"]',
+      edad: '[name="edad"]',
+      estado: '[name="estado"]',
+      ciudad: '[name="ciudad"]',
+      direccion_casa: '[name="direccion_casa"]',
+      iglesia: '[name="iglesia"]',
+      direccion_iglesia: '[name="direccion_iglesia"]'
+    };
+    const claves = soloClaves || Object.keys(CAMPOS);
+    claves.forEach(k => {
+      const controles = [...form.querySelectorAll(CAMPOS[k] || "")];
+      const input = controles[0];
       if (!input) return;
       const label = input.closest("label");
       let p = label && label.querySelector("[data-err]");
       if (err[k]) {
-        input.style.borderColor = "rgba(214,84,84,.75)";
-        input.setAttribute("aria-invalid", "true");
+        controles.forEach(n => { n.style.borderColor = "rgba(214,84,84,.75)"; n.setAttribute("aria-invalid", "true"); });
         if (!p && label) {
           p = document.createElement("p");
           p.setAttribute("data-err", "");
@@ -603,15 +733,14 @@ class Component extends DCLogic {
         }
         if (p) p.textContent = err[k];
       } else {
-        input.style.borderColor = "rgba(243,239,230,.16)";
-        input.removeAttribute("aria-invalid");
+        controles.forEach(n => { n.style.borderColor = "rgba(243,239,230,.16)"; n.removeAttribute("aria-invalid"); });
         if (p) p.remove();
       }
     });
-    const primero = CAMPOS.filter(k => err[k])[0];
+    const primero = claves.filter(k => err[k])[0];
     if (primero) {
-      const el = form.querySelector('[name="' + primero + '"]');
-      if (el) el.focus();
+      const el = form.querySelector(CAMPOS[primero]);
+      if (el && el !== document.activeElement) el.focus();
     }
   }
 
@@ -654,16 +783,8 @@ class Component extends DCLogic {
         e.preventDefault();
         if (this.state.sending) return;
         const form = e.target;
-        const f = new FormData(form);
-        const val = k => (f.get(k) || "").toString().trim();
-        if (val("website")) return; // honeypot: solo los bots lo llenan
-        const payload = {
-          nombre: val("nombre"),
-          apellido: val("apellido"),
-          edad: val("edad"),
-          iglesia: val("iglesia"),
-          direccion_iglesia: val("direccion_iglesia")
-        };
+        const payload = this.leerForm(form);
+        if (payload.website) return; // honeypot: solo los bots lo llenan
 
         // Validar antes de gastar una petición de red.
         const err = this.validar(payload);
@@ -683,6 +804,7 @@ class Component extends DCLogic {
           lock(false);
           form.reset();
           if (d && d.duplicado) {
+            this._cedulasTomadas.add(soloDigitos(payload.cedula));
             this.setState({ sending: false, duplicado: true, registeredName: payload.nombre || "", errorMsg: "" });
             return;
           }
