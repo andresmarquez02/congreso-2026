@@ -260,6 +260,26 @@ function fotos_() {
 }
 
 /**
+ * Ejecútala UNA VEZ para conceder el permiso de Drive.
+ *
+ * fotos_() envuelve todo en try/catch, y ahí está la trampa: Apps Script solo
+ * abre el diálogo de autorización cuando la excepción de permiso ESCAPA de la
+ * función. Al atraparla, el script "termina bien" y Google no pregunta nada,
+ * así que refrescarFotos() se queda repitiendo el mismo error para siempre.
+ *
+ * Esta no atrapa nada a propósito: al ejecutarla salta el diálogo, aceptas el
+ * acceso a Drive y a partir de ahí el resto ya puede leer la carpeta.
+ *
+ * Después hay que publicar una VERSIÓN NUEVA de la implementación: el permiso
+ * queda concedido en el proyecto, pero la URL /exec sigue sirviendo la versión
+ * anterior, que se desplegó sin ese alcance.
+ */
+function autorizarDrive() {
+  var carpeta = DriveApp.getFolderById(CARPETA_FOTOS_ID);
+  Logger.log('OK: acceso concedido a la carpeta "%s"', carpeta.getName());
+}
+
+/**
  * Vacía la caché de la galería. Sirve para ver una foto recién subida sin
  * esperar los 5 minutos: selecciona esta función en el editor y Ejecutar.
  */
