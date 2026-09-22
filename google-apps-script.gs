@@ -248,6 +248,11 @@ function fotos_() {
     while (it.hasNext() && leidos < FOTOS_TOPE_LECTURA) {
       leidos++;
       var f = it.next();
+      // Una foto en la papelera sigue perteneciendo a la carpeta, así que
+      // getFiles() la devuelve igual. Sin este filtro, borrar una foto no la
+      // quita de la página hasta vaciar la papelera. Va lo primero: descartarla
+      // aquí ahorra las demás consultas de ese archivo.
+      if (f.isTrashed()) continue;
       if (String(f.getMimeType() || '').indexOf('image/') !== 0) continue;
       fotos.push({ id: f.getId(), nombre: f.getName(), fecha: f.getDateCreated().getTime() });
     }
