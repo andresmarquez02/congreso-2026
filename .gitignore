@@ -15,6 +15,10 @@ uploads/WhatsApp Image 2026-09-19 at 11.39.231 PM.png
 uploads/WhatsApp Image 2026-09-19 at 11.39.28 PM.jpeg
 uploads/WhatsApp Image 2026-09-19 at 11.39.289 PM.jpeg
 
+# Banco de pruebas local: copias de la página y respuestas simuladas para
+# ensayar sin depender de Drive ni del Apps Script. No forman parte del sitio.
+_*
+
 # Sistema operativo
 Thumbs.db
 desktop.ini

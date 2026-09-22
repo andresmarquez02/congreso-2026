@@ -28,8 +28,9 @@ var SHEET_NAME = 'Registros';
 // teléfono y la página las recoge sola, sin tocar el código. El ID es el
 // trozo largo de drive.google.com/drive/folders/<ID>.
 //
-// Mientras esto siga sin rellenar, la galería se queda con las fotos del
-// repositorio y no pasa nada más: no es un error, es el estado por defecto.
+// La galería vive entera de esta carpeta: si esto no apunta a ninguna, o si
+// Drive falla, la sección enseña un aviso de "vuelve en un rato" en vez de
+// quedarse en blanco.
 var CARPETA_FOTOS_ID = '1LCL7k0V15hTKDVwRM4Rf_yiZXo0X4-0b';
 
 var FOTOS_MAX = 40;          // Cuántas fotos como mucho se publican.

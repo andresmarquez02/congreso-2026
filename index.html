@@ -333,24 +333,10 @@
         </div>
         <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:13px; color:#A7B0C4">Agosto 2026 · <span style="color:#E8A33D">#IglesiaUnida</span></div>
       </div>
-      <div onClick="{{ openLightbox }}" data-gallery style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px">
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.25%20PM.jpeg" alt="Alabanza en el templo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.30%202PM.jpeg" alt="Congregación reunida" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.252%20PM.jpeg" alt="Oración por los jóvenes" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.263%20PM.jpeg" alt="Manos levantadas en adoración" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.2523%20PM.jpeg" alt="Servicio en el templo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.265%20PM.jpeg" alt="Adoración al aire libre" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.26%204PM.jpeg" alt="Ministración en la cruzada" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.27%207PM.jpeg" alt="Equipo de damas" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.276%20PM.jpeg" alt="Joven de rodillas en oración" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.288%20PM.jpeg" alt="Equipo ministerial" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.291%20PM.jpeg" alt="Plaza llena durante la cruzada" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.303%20PM.jpeg" alt="Predicación nocturna" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.30%204PM.jpeg" alt="Templo lleno" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.315%20PM.jpeg" alt="Hermanas adorando" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-        <img data-more class="g-photo" src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.316%20PM.jpeg" alt="Foto de familia del equipo" style="width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer" />
-      </div>
-      <div style="display:flex; justify-content:center; margin-top:22px">
+      <div onClick="{{ openLightbox }}" data-gallery style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px"></div>
+      <p data-gallery-empty style="margin:0; padding:34px 6px; text-align:center; font-size:15px; line-height:1.6; color:#8E9AB2">Estamos subiendo las fotos del congreso. Vuelve en un rato.</p>
+      
+      <div data-gallery-btn style="display:flex; justify-content:center; margin-top:22px">
         <button type="button" onClick="{{ toggleGallery }}" style="background:transparent; border:1px solid rgba(243,239,230,.3); color:#F3EFE6; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; cursor:pointer; min-height:48px">{{ galleryLabel }}</button>
       </div>
     </div>
@@ -510,9 +496,14 @@ class Component extends DCLogic {
     // Keep the collapsed gallery to complete rows at every breakpoint.
     const cols = w >= 1000 ? 4 : w >= 640 ? 3 : 2;
     const visible = cols === 3 ? 6 : 8;
-    root.querySelectorAll("[data-gallery] img").forEach((n, i) => {
+    const fotos = root.querySelectorAll("[data-gallery] img");
+    fotos.forEach((n, i) => {
       n.style.display = this.state.galleryOpen || i < visible ? "block" : "none";
     });
+    // Las fotos vienen de Drive, así que la sección tiene que aguantar los dos
+    // extremos: ninguna foto (aviso, sin botón) y más de las que caben (botón).
+    set("[data-gallery-btn]", "display", fotos.length > visible ? "flex" : "none");
+    set("[data-gallery-empty]", "display", fotos.length ? "none" : "block");
   }
 
   startCountdown() {
@@ -633,18 +624,19 @@ class Component extends DCLogic {
         this._fotosDrive = (d && d.fotos) || [];
         this.pintarFotosDrive();
       })
-      .catch(() => {}); // Sin Drive quedan las del repo: la galería nunca se ve vacía.
+      .catch(() => { this._fotosDrive = []; this.pintarFotosDrive(); });
   }
 
-  // Mete las fotos de Drive delante de las del repositorio, las más nuevas
-  // primero. Es idempotente: si ya están puestas, no toca nada.
+  // Llena la rejilla con las fotos de Drive, las más nuevas primero. Es
+  // idempotente: si ya están puestas, no toca nada.
   pintarFotosDrive() {
     const fotos = this._fotosDrive || [];
     const grid = (this.el || document).querySelector("[data-gallery]");
-    if (!grid || !fotos.length) return;
+    if (!grid) return;
     const puestas = grid.querySelectorAll("img[data-drive]");
     if (puestas.length === fotos.length) return;
     puestas.forEach(n => n.remove());
+    if (!fotos.length) return this.applyMedia();
     // Al revés y cada una al principio: acaban en el orden de la lista.
     fotos.slice().reverse().forEach(foto => {
       const img = document.createElement("img");
