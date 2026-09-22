@@ -30,7 +30,7 @@ var SHEET_NAME = 'Registros';
 //
 // Mientras esto siga sin rellenar, la galería se queda con las fotos del
 // repositorio y no pasa nada más: no es un error, es el estado por defecto.
-var CARPETA_FOTOS_ID = 'PEGA_AQUI_EL_ID_DE_LA_CARPETA';
+var CARPETA_FOTOS_ID = '1LCL7k0V15hTKDVwRM4Rf_yiZXo0X4-0b';
 
 var FOTOS_MAX = 40;          // Cuántas fotos como mucho se publican.
 var FOTOS_CACHE_SEG = 300;   // 5 min: Drive no se consulta en cada visita.
