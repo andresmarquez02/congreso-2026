@@ -34,6 +34,24 @@
   .g-photo { transition: transform .5s cubic-bezier(.4,0,.2,1), filter .5s cubic-bezier(.4,0,.2,1); }
   .g-photo:hover { transform: scale(1.04); filter: none !important; }
 
+  /* Esqueleto de la galería. Cubre dos esperas distintas: la consulta a
+     Drive (que pasa por Apps Script y tarda un par de segundos) y, ya como
+     fondo de cada <img>, lo que tarde esa foto en pintarse. El fondo de una
+     imagen se ve mientras carga, así que el mismo brillo sirve para ambas. */
+  @keyframes lbxShimmer {
+    from { background-position: 200% 0; }
+    to   { background-position: -200% 0; }
+  }
+  .g-skel, [data-gallery] img[data-drive] {
+    background-image: linear-gradient(100deg, #0F1626 35%, #1B2540 50%, #0F1626 65%);
+    background-size: 200% 100%;
+    animation: lbxShimmer 1.5s linear infinite;
+  }
+  .g-skel { aspect-ratio: 4/5; border-radius: 8px; }
+  @media (prefers-reduced-motion: reduce) {
+    .g-skel, [data-gallery] img[data-drive] { animation: none; }
+  }
+
   /* La tira del hero es una fila de 5 fotos en escritorio y un marquee en
      móvil. Para no duplicar el maquetado, el raíl y la pista son
      transparentes aquí (display:contents): las imágenes actúan como hijas
@@ -334,6 +352,7 @@
         <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:13px; color:#A7B0C4">Agosto 2026 · <span style="color:#E8A33D">#IglesiaUnida</span></div>
       </div>
       <div onClick="{{ openLightbox }}" data-gallery style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px"></div>
+      <div data-gallery-loading aria-hidden="true" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px"><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div><div class="g-skel"></div></div>
       <p data-gallery-empty style="margin:0; padding:34px 6px; text-align:center; font-size:15px; line-height:1.6; color:#8E9AB2">Estamos subiendo las fotos del congreso. Vuelve en un rato.</p>
       
       <div data-gallery-btn style="display:flex; justify-content:center; margin-top:22px">
@@ -471,6 +490,7 @@ class Component extends DCLogic {
     window.removeEventListener("resize", this._mq);
     window.removeEventListener("scroll", this._onScroll);
     clearInterval(this._cd);
+    clearTimeout(this._fotosCorte);
   }
   componentDidUpdate() {
     this.applyMedia();
@@ -490,7 +510,7 @@ class Component extends DCLogic {
     set("[data-form2]", "gridTemplateColumns", w >= 560 ? "1fr 1fr" : "1fr");
     set("[data-allies]", "gridTemplateColumns", w >= 760 ? "repeat(3,1fr)" : "1fr");
     set("[data-footer]", "gridTemplateColumns", w >= 760 ? "1.4fr .8fr 1fr" : "1fr");
-    set("[data-gallery]", "gridTemplateColumns", "repeat(" + (w >= 1000 ? 4 : w >= 640 ? 3 : 2) + ",1fr)");
+    set("[data-gallery], [data-gallery-loading]", "gridTemplateColumns", "repeat(" + (w >= 1000 ? 4 : w >= 640 ? 3 : 2) + ",1fr)");
     set("[data-col2]", "alignItems", w >= 900 ? "center" : "stretch");
     set("[data-strip]", "justifyContent", w >= 760 ? "center" : "flex-start");
     // Keep the collapsed gallery to complete rows at every breakpoint.
@@ -502,8 +522,14 @@ class Component extends DCLogic {
     });
     // Las fotos vienen de Drive, así que la sección tiene que aguantar los dos
     // extremos: ninguna foto (aviso, sin botón) y más de las que caben (botón).
-    set("[data-gallery-btn]", "display", fotos.length > visible ? "flex" : "none");
-    set("[data-gallery-empty]", "display", fotos.length ? "none" : "block");
+    // Tres estados excluyentes: esperando a Drive, con fotos, y sin ninguna.
+    // Sin el primero, la espera enseñaba el aviso de "vuelve en un rato",
+    // que dice justo lo contrario de lo que está pasando.
+    const cargando = this._fotosEstado !== "listo";
+    set("[data-gallery-loading]", "display", cargando ? "grid" : "none");
+    set("[data-gallery]", "display", cargando ? "none" : "grid");
+    set("[data-gallery-btn]", "display", !cargando && fotos.length > visible ? "flex" : "none");
+    set("[data-gallery-empty]", "display", !cargando && !fotos.length ? "block" : "none");
   }
 
   startCountdown() {
@@ -617,14 +643,20 @@ class Component extends DCLogic {
   // visita: la lista se guarda en memoria y se vuelve a pintar tras cada
   // render, porque el runtime rehace el marcado del componente.
   cargarFotosDrive() {
-    if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) return;
+    const terminar = fotos => {
+      this._fotosDrive = fotos;
+      this._fotosEstado = "listo";
+      clearTimeout(this._fotosCorte);
+      this.pintarFotosDrive();
+    };
+    if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) return terminar([]);
+    // Red de seguridad: si la petición se queda colgada, el esqueleto no se
+    // anima para siempre — a los 15s se pasa al aviso de galería vacía.
+    this._fotosCorte = setTimeout(() => terminar([]), 15000);
     fetch(REGISTRO_ENDPOINT + "?fotos=1")
       .then(r => r.json())
-      .then(d => {
-        this._fotosDrive = (d && d.fotos) || [];
-        this.pintarFotosDrive();
-      })
-      .catch(() => { this._fotosDrive = []; this.pintarFotosDrive(); });
+      .then(d => terminar((d && d.fotos) || []))
+      .catch(() => terminar([]));
   }
 
   // Llena la rejilla con las fotos de Drive, las más nuevas primero. Es
@@ -634,7 +666,10 @@ class Component extends DCLogic {
     const grid = (this.el || document).querySelector("[data-gallery]");
     if (!grid) return;
     const puestas = grid.querySelectorAll("img[data-drive]");
-    if (puestas.length === fotos.length) return;
+    // Ojo con el atajo: sin fotos, 0 === 0 también entra aquí. Hay que pasar
+    // igualmente por applyMedia, o el esqueleto se queda girando para siempre
+    // cuando Drive no devuelve nada.
+    if (puestas.length === fotos.length) return this.applyMedia();
     puestas.forEach(n => n.remove());
     if (!fotos.length) return this.applyMedia();
     // Al revés y cada una al principio: acaban en el orden de la lista.
