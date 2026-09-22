@@ -34,7 +34,12 @@ var SHEET_NAME = 'Registros';
 var CARPETA_FOTOS_ID = '1LCL7k0V15hTKDVwRM4Rf_yiZXo0X4-0b';
 
 var FOTOS_MAX = 40;          // Cuántas fotos como mucho se publican.
-var FOTOS_CACHE_SEG = 300;   // 5 min: Drive no se consulta en cada visita.
+// Cuánto se reutiliza el listado sin volver a recorrer Drive. Es un
+// equilibrio: recorrer la carpeta tarda varios segundos, pero una foto
+// recién subida no aparece hasta que caduca esto. Con 90s, quien sube
+// una foto la ve en la página en menos de dos minutos. Para verla al
+// instante, ejecutar refrescarFotos() en el editor.
+var FOTOS_CACHE_SEG = 90;
 var FOTOS_TOPE_LECTURA = 300; // Freno por si la carpeta crece sin control.
 
 // El orden de HEADERS es el orden de las columnas y es el formato único del

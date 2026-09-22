@@ -34,6 +34,31 @@
   .g-photo { transition: transform .5s cubic-bezier(.4,0,.2,1), filter .5s cubic-bezier(.4,0,.2,1); }
   .g-photo:hover { transform: scale(1.04); filter: none !important; }
 
+  /* Aliados: con solo tres logos, una rejilla los apilaba en móvil y dejaba
+     una columna de tarjetas altas. Como marquee ocupan una franja y se leen
+     de una pasada. Sin tarjeta ni pie: los logos se apoyan en el fondo crema. Cada pista repite los tres logos tres veces para que mida
+     más que el contenedor; si no, en pantallas anchas se abre un hueco. */
+  [data-allies-viewport] {
+    overflow: hidden;
+    margin: 0 -18px;   /* come el padding de la sección: a tope en móvil */
+    padding: 4px 0;
+    /* Las tarjetas se desvanecen en los extremos en vez de cortarse en seco. */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  [data-allies-rail] {
+    display: flex;
+    width: max-content;
+    animation: lbxMarquee 30s linear infinite;
+  }
+  [data-allies-track] { display: flex; gap: 14px; padding-right: 14px; }
+  /* Se detiene al pasar el ratón, por si alguien quiere leer un nombre. */
+  [data-allies-viewport]:hover [data-allies-rail] { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-allies-rail] { animation: none; }
+    [data-allies-viewport] { overflow-x: auto; }  /* que se pueda recorrer a mano */
+  }
+
   /* Esqueleto de la galería. Cubre dos esperas distintas: la consulta a
      Drive (que pasa por Apps Script y tarda un par de segundos) y, ya como
      fondo de cada <img>, lo que tarde esa foto en pintarse. El fondo de una
@@ -365,18 +390,30 @@
     <div style="max-width:1200px; margin:0 auto; text-align:center">
       <div data-anim="up" style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.2em; font-size:12px; color:#8A6A2F; margin-bottom:12px">Patrocinadores y aliados</div>
       <h2 data-anim="up" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(26px,6.4vw,44px); line-height:.96; letter-spacing:-.035em; margin:0 0 30px; color:#0B1020"><span style="font-family:'Kaushan Script',cursive; font-weight:400; text-transform:none; color:#8A6A2F; letter-spacing:0; font-size:.9em">Organizaciones</span> participantes</h2>
-      <div style="display:grid; grid-template-columns:1fr; gap:14px" data-allies>
-        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
-          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:190px; max-height:90px; width:100%; object-fit:contain" />
-          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Radio Plenitud 102.1 FM</span>
-        </div>
-        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
-          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:150px; max-height:100px; width:100%; object-fit:contain" />
-          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Iglesia Sinaí</span>
-        </div>
-        <div data-anim="up" style="background:#FFFFFF; border:1px solid rgba(11,16,32,.1); border-radius:14px; padding:26px; display:grid; place-items:center; gap:14px; min-height:170px">
-          <img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:130px; max-height:100px; width:100%; object-fit:contain" />
-          <span style="font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:12px; color:#5B6478">Iglesia Unida</span>
+      <div data-anim="up" data-allies-viewport>
+        <div data-allies-rail>
+          <div data-allies-track>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+          </div>
+          <div data-allies-track aria-hidden="true">
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.23%20PM.png" alt="Radio Plenitud 102.1 FM" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.242%20PM.png" alt="Iglesia Evangélica Pentecostal Sinaí" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+            <div style="flex:0 0 190px; display:grid; place-items:center; height:120px; padding:0 14px; box-sizing:border-box"><img src="uploads/WhatsApp%20Image%202026-09-19%20at%2011.39.24%20PM.png" alt="Iglesia Unida" style="max-width:100%; max-height:84px; width:auto; object-fit:contain" /></div>
+          </div>
         </div>
       </div>
     </div>
@@ -508,7 +545,6 @@ class Component extends DCLogic {
     root.querySelectorAll("[data-burger]").forEach(n => { n.style.display = w >= 900 ? "none" : "grid"; });
     set("[data-col2]", "gridTemplateColumns", w >= 900 ? "1.05fr .95fr" : "1fr");
     set("[data-form2]", "gridTemplateColumns", w >= 560 ? "1fr 1fr" : "1fr");
-    set("[data-allies]", "gridTemplateColumns", w >= 760 ? "repeat(3,1fr)" : "1fr");
     set("[data-footer]", "gridTemplateColumns", w >= 760 ? "1.4fr .8fr 1fr" : "1fr");
     set("[data-gallery], [data-gallery-loading]", "gridTemplateColumns", "repeat(" + (w >= 1000 ? 4 : w >= 640 ? 3 : 2) + ",1fr)");
     set("[data-col2]", "alignItems", w >= 900 ? "center" : "stretch");
@@ -645,18 +681,42 @@ class Component extends DCLogic {
   cargarFotosDrive() {
     const terminar = fotos => {
       this._fotosDrive = fotos;
-      this._fotosEstado = "listo";
-      clearTimeout(this._fotosCorte);
       this.pintarFotosDrive();
+      // Sin fotos no hay nada que esperar: se descubre ya la sección.
+      if (!fotos.length) this.fotosListas();
     };
     if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) return terminar([]);
-    // Red de seguridad: si la petición se queda colgada, el esqueleto no se
-    // anima para siempre — a los 15s se pasa al aviso de galería vacía.
-    this._fotosCorte = setTimeout(() => terminar([]), 15000);
-    fetch(REGISTRO_ENDPOINT + "?fotos=1")
+    // Red de seguridad para una petición colgada. Generoso a propósito: el
+    // listado suele tardar 3-5s, pero se han medido picos de más de 30s
+    // cuando Apps Script arranca en frío.
+    this._fotosCorte = setTimeout(() => this.fotosListas(), 45000);
+    // El sufijo de tiempo evita que el navegador sirva de su caché el listado
+    // de la visita anterior: una foto recién subida tiene que aparecer.
+    fetch(REGISTRO_ENDPOINT + "?fotos=1&t=" + Date.now())
       .then(r => r.json())
       .then(d => terminar((d && d.fotos) || []))
       .catch(() => terminar([]));
+  }
+
+  // Retira el esqueleto. Una sola vez, venga de donde venga: fotos cargadas,
+  // galería vacía o corte por tiempo.
+  fotosListas() {
+    if (this._fotosEstado === "listo") return;
+    this._fotosEstado = "listo";
+    clearTimeout(this._fotosCorte);
+    this.applyMedia();
+  }
+
+  // El esqueleto no se va con la lista, sino cuando las fotos que se ven de
+  // entrada ya están resueltas: cargadas, o descartadas tras agotar los
+  // reintentos. Yéndose antes quedaba la rejilla de huecos vacíos que es
+  // justo lo que el esqueleto viene a evitar.
+  esperarFotos(promesas) {
+    if (!promesas.length) return this.fotosListas();
+    Promise.all(promesas).then(() => this.fotosListas());
+    // Presupuesto propio para las imágenes: el de la petición ya se gastó.
+    clearTimeout(this._fotosCorte);
+    this._fotosCorte = setTimeout(() => this.fotosListas(), 30000);
   }
 
   // Llena la rejilla con las fotos de Drive, las más nuevas primero. Es
@@ -666,29 +726,60 @@ class Component extends DCLogic {
     const grid = (this.el || document).querySelector("[data-gallery]");
     if (!grid) return;
     const puestas = grid.querySelectorAll("img[data-drive]");
-    // Ojo con el atajo: sin fotos, 0 === 0 también entra aquí. Hay que pasar
-    // igualmente por applyMedia, o el esqueleto se queda girando para siempre
-    // cuando Drive no devuelve nada.
     if (puestas.length === fotos.length) return this.applyMedia();
     puestas.forEach(n => n.remove());
     if (!fotos.length) return this.applyMedia();
-    // Al revés y cada una al principio: acaban en el orden de la lista.
-    fotos.slice().reverse().forEach(foto => {
+
+    // Las primeras se piden ya y son las que retienen el esqueleto; el resto
+    // quedan en diferido, porque están fuera de pantalla y nadie las espera.
+    // Cuatro y no más: cuantas más miniaturas se piden a la vez, más rechaza
+    // Drive, y cada rechazo cuesta un reintento con su espera.
+    const ADELANTADAS = 4;
+    const esperadas = [];
+    fotos.forEach((foto, i) => {
       const img = document.createElement("img");
       img.className = "g-photo";
       img.setAttribute("data-drive", "");
-      img.setAttribute("loading", "lazy");
+      img.setAttribute("loading", i < ADELANTADAS ? "eager" : "lazy");
       // El lightbox pide una versión más grande que la de la rejilla.
       img.setAttribute("data-full", FOTO_DRIVE_URL(foto.id, 1600));
       img.alt = foto.nombre || "Foto del congreso";
       img.style.cssText = ESTILO_FOTO;
-      // Una foto que Drive no sirva no deja un hueco roto en la rejilla.
-      img.onerror = () => { img.remove(); this.applyMedia(); };
-      img.src = FOTO_DRIVE_URL(foto.id, 900);
-      grid.insertBefore(img, grid.firstChild);
+
+      // Solo las adelantadas retienen el esqueleto. `resolver` se llama tanto
+      // si la foto acaba viéndose como si se descarta: lo que no vale es
+      // darla por resuelta en un fallo que todavía va a reintentarse.
+      let resolver = null;
+      if (i < ADELANTADAS) esperadas.push(new Promise(ok => { resolver = ok; }));
+      const resuelta = () => { if (resolver) { resolver(); resolver = null; } };
+
+      img.onload = resuelta;
+      // Drive rechaza parte de las miniaturas cuando se le piden varias a la
+      // vez, y ese rechazo es temporal: pedidas de una en una responden todas.
+      // Por eso se reintenta antes de rendirse; borrarla al primer fallo hacía
+      // desaparecer fotos buenas de la galería para siempre.
+      img.onerror = () => {
+        const intentos = (Number(img.dataset.intentos) || 0) + 1;
+        img.dataset.intentos = intentos;
+        if (intentos > 4) { img.remove(); this.applyMedia(); resuelta(); return; }
+        // Espera creciente y holgada (1,5s, 3s, 4,5s, 6s). Con reintentos
+        // pegados se agotaban los cuatro en tres segundos, que es justo
+        // cuando el límite de Drive sigue activo: no daba tiempo a ceder.
+        // El sufijo cambia la URL: si no, el navegador repite el fallo cacheado.
+        setTimeout(() => { img.src = FOTO_DRIVE_URL(foto.id, 900) + "&r=" + intentos; },
+                   1500 * intentos);
+      };
+
+      // Las adelantadas salen escalonadas en vez de las cuatro de golpe: la
+      // ráfaga simultánea es lo que dispara los rechazos de Drive. Las
+      // diferidas no piden nada hasta que se acercan a la pantalla.
+      if (i < ADELANTADAS) setTimeout(() => { img.src = FOTO_DRIVE_URL(foto.id, 900); }, i * 250);
+      else img.src = FOTO_DRIVE_URL(foto.id, 900);
+      grid.appendChild(img);
     });
     // applyMedia decide cuáles se ven con la galería plegada, por posición.
     this.applyMedia();
+    this.esperarFotos(esperadas);
   }
 
   // Los <select> se llenan desde las constantes de arriba para no repetir las
