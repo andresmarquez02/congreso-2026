@@ -159,6 +159,52 @@ Hay además un campo señuelo (`website`) oculto fuera de pantalla. Si llega
 relleno, la petición se descarta en silencio: los bots completan todos los
 campos, las personas no.
 
+## La galería
+
+Las 15 fotos de `uploads/` son la base y están escritas en el marcado. Delante
+de ellas, la página coloca las que el equipo va subiendo a una **carpeta de
+Google Drive**, de la más nueva a la más vieja.
+
+`GET /exec?fotos=1` devuelve `{ ok: true, fotos: [{ id, nombre }] }` leyendo la
+carpeta con `DriveApp`. El listado se guarda en `CacheService` **5 minutos**,
+porque Drive es lento y la galería la ve todo el que entra; una foto recién
+subida tarda eso en aparecer, o lo que tardes en ejecutar `refrescarFotos()` en
+el editor de Apps Script.
+
+Cada foto se pinta con `https://drive.google.com/thumbnail?id=<id>&sz=w900`, y
+el lightbox pide la misma con `sz=w1600`.
+
+> Esa URL de miniatura **no está documentada por Google** y tiene límites de
+> tráfico; es hoy la única forma estable de enseñar una imagen de Drive en una
+> web, pero no es un CDN. Por eso las fotos del repositorio siguen ahí: si el
+> listado falla, si la carpeta está vacía o si Drive deja de servir una imagen,
+> esa `<img>` se quita sola (`onerror`) y la galería se queda con lo que tenga.
+> Nunca se ve un hueco roto ni una sección vacía.
+
+El botón «Ver más fotos» no necesita nada: `applyMedia()` decide qué se ve por
+posición en la rejilla, así que las de Drive entran en el recuento solas.
+
+### Configurar la carpeta
+
+1. Crear una carpeta en Drive con la cuenta **dueña del Apps Script**.
+2. Compartir → **Cualquier persona con el enlace** → *Lector*. Hace falta:
+   las miniaturas las sirve Google directamente al navegador de quien visita.
+3. Dar permiso de **Editor** a quienes vayan a subir fotos.
+4. Copiar el ID de la URL `drive.google.com/drive/folders/<ID>` y pegarlo en
+   `CARPETA_FOTOS_ID`, dentro de `google-apps-script.gs`.
+5. Publicar **versión nueva** de la implementación. Leer Drive es un permiso
+   que el script no tenía, así que Google pedirá autorizar otra vez.
+
+Mientras `CARPETA_FOTOS_ID` siga con el texto de ejemplo, el endpoint devuelve
+una lista vacía y la galería se queda con las 15 del repositorio. No es un
+error: es el estado por defecto.
+
+> En esa carpeta van **solo fotos de la galería**. Los logos de las
+> organizaciones participantes no: viven en `uploads/` y se pintan en la
+> sección «Aliados» (`[data-allies]`), que es otra rejilla y que este código no
+> toca. Todo lo que sea una imagen y esté en la carpeta sale publicado en la
+> galería, así que lo que no deba verse ahí, no se sube ahí.
+
 ## Comportamiento en móvil
 
 Hay un bloque `@media (max-width: 759px)` al final de los estilos con dos

@@ -24,6 +24,18 @@
 var SHEET_ID = '1vsYiLrkeSa1p-7BG6W1fwGff9D5nmMcuSIsm2lD9NR4';
 var SHEET_NAME = 'Registros';
 
+// Carpeta de Drive con las fotos de la galería. El equipo sube ahí desde el
+// teléfono y la página las recoge sola, sin tocar el código. El ID es el
+// trozo largo de drive.google.com/drive/folders/<ID>.
+//
+// Mientras esto siga sin rellenar, la galería se queda con las fotos del
+// repositorio y no pasa nada más: no es un error, es el estado por defecto.
+var CARPETA_FOTOS_ID = 'PEGA_AQUI_EL_ID_DE_LA_CARPETA';
+
+var FOTOS_MAX = 40;          // Cuántas fotos como mucho se publican.
+var FOTOS_CACHE_SEG = 300;   // 5 min: Drive no se consulta en cada visita.
+var FOTOS_TOPE_LECTURA = 300; // Freno por si la carpeta crece sin control.
+
 // El orden de HEADERS es el orden de las columnas y es el formato único del
 // que salen los certificados: 'Nombre completo' ya viene capitalizado para
 // combinar correspondencia sin tocar nada a mano.
@@ -188,19 +200,71 @@ function existeDuplicado_(sh, cedula) {
 }
 
 /**
- * Prueba de vida y consulta de cédula.
+ * Prueba de vida, consulta de cédula y listado de la galería.
  *
  *   /exec                  -> { ok: true, service: ... }
  *   /exec?cedula=12345678  -> { ok: true, existe: true|false }
+ *   /exec?fotos=1          -> { ok: true, fotos: [{ id, nombre }, ...] }
  *
  * El formulario la usa para avisar en cuanto se sale del campo, sin esperar al
  * envío. Solo devuelve un sí/no: ningún dato de la persona sale de la hoja.
  */
 function doGet(e) {
-  var cedula = soloDigitos_(e && e.parameter && e.parameter.cedula);
+  var params = (e && e.parameter) || {};
+  if (params.fotos) return json_(fotos_());
+  var cedula = soloDigitos_(params.cedula);
   if (!cedula) return json_({ ok: true, service: 'registros-congreso-2026' });
   if (cedula.length < 6 || cedula.length > 9) return json_({ ok: false, error: 'Cédula inválida' });
   return json_({ ok: true, existe: existeDuplicado_(getSheet_(), cedula) });
+}
+
+/**
+ * Listado de la carpeta de fotos, de la más nueva a la más vieja.
+ *
+ * Nunca lanza: si la carpeta no está configurada, no existe o Drive falla,
+ * devuelve una lista vacía y la página se queda con las fotos del repo. Una
+ * galería con menos fotos se lee bien; una galería rota, no.
+ */
+function fotos_() {
+  try {
+    if (!CARPETA_FOTOS_ID || CARPETA_FOTOS_ID.indexOf('PEGA_AQUI') === 0) {
+      return { ok: true, fotos: [] };
+    }
+    // Drive es lento y la galería la ve todo el que entra: sin caché, cada
+    // visita pagaría el recorrido de la carpeta entera.
+    var cache = CacheService.getScriptCache();
+    var guardado = cache.get('fotos');
+    if (guardado) return JSON.parse(guardado);
+
+    var it = DriveApp.getFolderById(CARPETA_FOTOS_ID).getFiles();
+    var fotos = [];
+    var leidos = 0;
+    while (it.hasNext() && leidos < FOTOS_TOPE_LECTURA) {
+      leidos++;
+      var f = it.next();
+      if (String(f.getMimeType() || '').indexOf('image/') !== 0) continue;
+      fotos.push({ id: f.getId(), nombre: f.getName(), fecha: f.getDateCreated().getTime() });
+    }
+    fotos.sort(function (a, b) { return b.fecha - a.fecha; });
+    fotos = fotos.slice(0, FOTOS_MAX).map(function (f) {
+      return { id: f.id, nombre: f.nombre };
+    });
+
+    var salida = { ok: true, fotos: fotos };
+    cache.put('fotos', JSON.stringify(salida), FOTOS_CACHE_SEG);
+    return salida;
+  } catch (err) {
+    return { ok: false, fotos: [], error: String(err && err.message || err) };
+  }
+}
+
+/**
+ * Vacía la caché de la galería. Sirve para ver una foto recién subida sin
+ * esperar los 5 minutos: selecciona esta función en el editor y Ejecutar.
+ */
+function refrescarFotos() {
+  CacheService.getScriptCache().remove('fotos');
+  Logger.log('Caché de fotos vaciada: %s', JSON.stringify(fotos_()));
 }
 
 /**

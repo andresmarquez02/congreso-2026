@@ -437,6 +437,15 @@ const ESTADOS = [
   "Portuguesa", "Sucre", "Táchira", "Trujillo", "Yaracuy", "Zulia"
 ];
 
+// Las fotos de la galería salen de una carpeta de Drive (ver CARPETA_FOTOS_ID
+// en google-apps-script.gs). Esta URL de miniatura es la única forma estable
+// hoy de enseñar una imagen de Drive en una web; no está documentada por
+// Google, así que si algún día deja de responder, cada <img> se quita sola y
+// quedan las fotos del repositorio.
+const FOTO_DRIVE_URL = (id, ancho) => "https://drive.google.com/thumbnail?id=" + id + "&sz=w" + ancho;
+
+const ESTILO_FOTO = "width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:8px; cursor:pointer";
+
 const REGISTRO_ENDPOINT = "https://script.google.com/macros/s/AKfycbx0k2i5uRKg1eYCdXZRC4MZldRRau-Mm3TZ3AsbZJ7vhbMnqTqnLHZlOearVG6WJ12I/exec";
 
 class Component extends DCLogic {
@@ -454,6 +463,7 @@ class Component extends DCLogic {
     // en la raíz sobrevive a los re-render del formulario.
     this._onFocusOut = e => { if (e.target && e.target.name === "cedula") this.revisarCedula(e.target); };
     (this.el || document).addEventListener("focusout", this._onFocusOut);
+    this.cargarFotosDrive();
     this._mq = () => this.applyMedia();
     window.addEventListener("resize", this._mq);
     this.startCountdown();
@@ -479,6 +489,7 @@ class Component extends DCLogic {
   componentDidUpdate() {
     this.applyMedia();
     this.poblarListas();
+    this.pintarFotosDrive();
     const img = (this.el || document).querySelector("#lightboxImg");
     if (img && this.state.lightboxSrc && img.getAttribute("src") !== this.state.lightboxSrc) img.setAttribute("src", this.state.lightboxSrc);
   }
@@ -609,6 +620,48 @@ class Component extends DCLogic {
     els.forEach(el => io.observe(el));
     // Safety net: nothing stays hidden for longer than 4s.
     setTimeout(() => els.forEach(el => { if (el.style.opacity === "0") show(el); }), 4000);
+  }
+
+  // Pide a Apps Script el listado de la carpeta de Drive. Una sola vez por
+  // visita: la lista se guarda en memoria y se vuelve a pintar tras cada
+  // render, porque el runtime rehace el marcado del componente.
+  cargarFotosDrive() {
+    if (!REGISTRO_ENDPOINT || REGISTRO_ENDPOINT.indexOf("PEGA_AQUI") === 0) return;
+    fetch(REGISTRO_ENDPOINT + "?fotos=1")
+      .then(r => r.json())
+      .then(d => {
+        this._fotosDrive = (d && d.fotos) || [];
+        this.pintarFotosDrive();
+      })
+      .catch(() => {}); // Sin Drive quedan las del repo: la galería nunca se ve vacía.
+  }
+
+  // Mete las fotos de Drive delante de las del repositorio, las más nuevas
+  // primero. Es idempotente: si ya están puestas, no toca nada.
+  pintarFotosDrive() {
+    const fotos = this._fotosDrive || [];
+    const grid = (this.el || document).querySelector("[data-gallery]");
+    if (!grid || !fotos.length) return;
+    const puestas = grid.querySelectorAll("img[data-drive]");
+    if (puestas.length === fotos.length) return;
+    puestas.forEach(n => n.remove());
+    // Al revés y cada una al principio: acaban en el orden de la lista.
+    fotos.slice().reverse().forEach(foto => {
+      const img = document.createElement("img");
+      img.className = "g-photo";
+      img.setAttribute("data-drive", "");
+      img.setAttribute("loading", "lazy");
+      // El lightbox pide una versión más grande que la de la rejilla.
+      img.setAttribute("data-full", FOTO_DRIVE_URL(foto.id, 1600));
+      img.alt = foto.nombre || "Foto del congreso";
+      img.style.cssText = ESTILO_FOTO;
+      // Una foto que Drive no sirva no deja un hueco roto en la rejilla.
+      img.onerror = () => { img.remove(); this.applyMedia(); };
+      img.src = FOTO_DRIVE_URL(foto.id, 900);
+      grid.insertBefore(img, grid.firstChild);
+    });
+    // applyMedia decide cuáles se ven con la galería plegada, por posición.
+    this.applyMedia();
   }
 
   // Los <select> se llenan desde las constantes de arriba para no repetir las
@@ -816,7 +869,11 @@ class Component extends DCLogic {
         });
       },
       resetForm: () => this.setState({ registered: false, duplicado: false, registeredName: "", errorMsg: "" }),
-      openLightbox: e => { if (e.target.tagName === "IMG") this.setState({ lightboxSrc: e.target.getAttribute("src") }); },
+      openLightbox: e => {
+        if (e.target.tagName !== "IMG") return;
+        // Las de Drive traen su versión grande en data-full; las del repo no.
+        this.setState({ lightboxSrc: e.target.getAttribute("data-full") || e.target.getAttribute("src") });
+      },
       closeLightbox: () => this.setState({ lightboxSrc: null })
     };
   }
