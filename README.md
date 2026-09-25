@@ -201,8 +201,8 @@ error: es el estado por defecto.
 
 > En esa carpeta van **solo fotos de la galería**. Los logos de las
 > organizaciones participantes no: viven en `uploads/` y se pintan en la
-> sección «Aliados» (`[data-allies]`), que es otra rejilla y que este código no
-> toca. Todo lo que sea una imagen y esté en la carpeta sale publicado en la
+> sección «Aliados» (`[data-allies-track]`), un marquee escrito en el marcado
+> que este código no toca. Todo lo que sea una imagen y esté en la carpeta sale publicado en la
 > galería, así que lo que no deba verse ahí, no se sube ahí.
 
 ## Comportamiento en móvil
